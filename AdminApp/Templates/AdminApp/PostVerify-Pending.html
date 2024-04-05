@@ -1,0 +1,161 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+<style>
+   table td a {
+      text-decoration: none !important;
+   }
+</style>
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>All Post</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">All Post</li>
+         </ol>
+      </nav>
+   </div>
+   <style>
+      .card-refresh {
+         position: relative;
+      }
+   
+      .btn-refresh {
+         background: #aab0bb;
+         padding: 7px 12px;
+         cursor: pointer;
+         text-decoration: none;
+         color: white;
+         border-radius: 50px;
+         font-size: 13px;
+         position: absolute;
+         top: 16px;
+         right: 23px;
+      }
+   
+      .btn-refresh:hover {
+         text-decoration: none;
+         background: #1f3c74;
+         color: white;
+      }
+   </style>
+   <!-- End Page Title -->
+   <section class="section dashboard">
+      <div class="row">
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+               <!-- Table 1 -->
+               <div class="col-12">
+                  <div class="card">
+                     <div class="card-body card-refresh">
+                        <h5 class="card-title">Application Pending</h5>
+                        <a class="btn-refresh" onclick="location.reload();">Reload Page</a>
+                        <!-- Alert Message -->
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div id="message" class="alert alert-{{ message.tags }} alert-danger  fade show" role="alert">
+                           <span class="small">{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <script>
+                           setTimeout(function () {
+                              var message = document.getElementById('message');
+                              if (message) {
+                                 message.style.display = 'none';
+                              }
+                           }, 1500);
+                        </script>
+                        <!-- Bordered Table -->
+                        {% if data_education or data_health %}
+                        <table class="table table-bordered">
+                           <thead>
+                              <tr>
+                                 <th scope="col">Id</th>
+                                 <th scope="col">Post Date</th>
+                                 <th scope="col">Post</th>
+                                 <th scope="col">Applicants</th>
+                              </tr>
+                           </thead>
+                           <style>
+                              .table-user-btn  {
+                                 display: inline-flex;
+                                 flex-wrap: wrap;
+                              }
+
+                              .table-user-btn span {
+                                 border: 1px solid #dadada;
+                                 border-radius: 45px;
+                                 padding: 4px 7px;
+                                 height: fit-content;
+                                 margin-right: 6px;
+                                 margin-top: 3px;
+                                 margin-bottom: 3px;
+                                 width: fit-content;
+                              }
+                           </style>
+                           <tbody>
+                              <!-- Education -->
+                              {% for item in data_education %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td><a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a></td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryeducation_set.all %}
+                                       {% if not application.is_approved %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}"> {{ application.user.full_name }}</a></span>
+                                       {% endif %}
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                              <!-- End Education -->
+                              <!-- Healthcare -->
+                              {% for item in data_health %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td><a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a></td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryhealth_set.all %}
+                                       {% if not application.is_approved %}
+                                       <span>
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}"> 
+                                             {{ application.user.full_name }}</a></span>
+                                          {% endif %}
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                              <!-- End Healthcare -->
+                           </tbody>
+                        </table>
+                        {% endif %}
+                        <!-- End Bordered Table -->
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+            </div>
+         </div>
+         <!-- End Left side columns -->
+      </div>
+   </section>
+</main>
+<!-- End #main -->
+{% endif %}
+{% endblock main-content %}

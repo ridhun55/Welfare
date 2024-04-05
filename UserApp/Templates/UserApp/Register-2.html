@@ -1,0 +1,566 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Add Profile Details</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Profile Details</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <div class="col-md-8">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title">Basic Details</h5>
+            
+                  <!-- Multi Columns Form -->
+                  <form method="post" enctype="multipart/form-data" class="row g-3">
+                     {% csrf_token %}
+                     <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" value="{{user.username}}" class="form-control" required>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Aadhar Number</label>
+                        <input type="text" name="aadhar_no" value="{{user.aadhar_no}}" class="form-control" disabled>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="full_name" value="{{ user.full_name }}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Profile Image</label>
+                        <input class="form-control" type="file" name="profile_img" required>
+                     </div>
+                     <div class="col-md-4">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select id="gender" name="gender" required class="form-select">
+                           {% if user.gender == 'M' %}
+                           <option value="M" selected>Male</option>
+                           {% else %}
+                           <option value="M">Male</option>
+                           {% endif %}
+                           {% if user.gender == 'F' %}
+                           <option value="F" selected>Female</option>
+                           {% else %}
+                           <option value="F">Female</option>
+                           {% endif %}
+                           {% if user.gender == 'O' %}
+                           <option value="O" selected>Other</option>
+                           {% else %}
+                           <option value="O">Other</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">Age</label>
+                        <input type="number" name="age" value="{{ user.age }}" required class="form-control">
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" name="dob" value="{{ user.dob | date:'Y-m-d' }}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" value="{{user.email}}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="text" name="mobile_no" value="{{ user.mobile_no }}" required class="form-control">
+                     </div>
+                     <div class="col-md-12">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-control" style="height: 100px" name="address" value="{{ user.address }}"
+                           required></textarea>
+                     </div>
+                     <div class="col-md-12">
+                        <h5 class="card-title">Personal Details</h5>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Father's Name</label>
+                        <input type="text" name="father" value="{{ user.father }}" class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Mother's Name</label>
+                        <input type="text" name="mother" value="{{ user.mother }}" class="form-control">
+                     </div>
+
+                     <div class="col-md-3">
+                        <label for="marital_status" class="form-label">Marital Status</label>
+                        <select id="marital_status" name="marital_status" required class="form-select">
+                           {% if user.marital_status == 'S' %}
+                           <option value="S" selected>Single</option>
+                           {% else %}
+                           <option value="S">Single</option>
+                           {% endif %}
+                           {% if user.marital_status == 'M' %}
+                           <option value="M" selected>Married</option>
+                           {% else %}
+                           <option value="M">Married</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-3">
+                        <label class="form-label">Children</label>
+                        <input type="number"  name="children_no" value="{{ user.children_no }}" class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label for="employment_status" class="form-label">Employment Status</label>
+                        <select id="employment_status" name="employment_status" required class="form-select">
+                           {% if user.employment_status == 'Emp' %}
+                           <option value="Emp" selected>Employed</option>
+                           {% else %}
+                           <option value="Emp">Employed</option>
+                           {% endif %}
+                           {% if user.employment_status == 'Unemp' %}
+                           <option value="Unemp" selected>Unemployed</option>
+                           {% else %}
+                           <option value="Unemp">Unemployed</option>
+                           {% endif %}
+                           {% if user.employment_status == 'Self-emp' %}
+                           <option value="Self-emp" selected>Self-employed</option>
+                           {% else %}
+                           <option value="Self-emp">Self-employed</option>
+                           {% endif %}
+                           {% if user.employment_status == 'Stud' %}
+                           <option value="Stud" selected>Student</option>
+                           {% else %}
+                           <option value="Stud">Student</option>
+                           {% endif %}
+                           {% if user.employment_status == 'Ret' %}
+                           <option value="Ret" selected>Retired</option>
+                           {% else %}
+                           <option value="Ret">Retired</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="occupation" class="form-label">Occupation</label>
+                        <select id="occupation" name="occupation" required class="form-select">
+                           {% if user.occupation == 'Government_Employee' %}
+                           <option value="Government_Employee" selected>Government Employee</option>
+                           {% else %}
+                           <option value="Government_Employee">Government Employee</option>
+                           {% endif %}
+                           {% if user.occupation == 'Accountant' %}
+                           <option value="Accountant" selected>Accountant</option>
+                           {% else %}
+                           <option value="Accountant">Accountant</option>
+                           {% endif %}
+                           {% if user.occupation == 'Actor/Actress' %}
+                           <option value="Actor/Actress" selected>Actor/Actress</option>
+                           {% else %}
+                           <option value="Actor/Actress">Actor/Actress</option>
+                           {% endif %}
+                           {% if user.occupation == 'Architect' %}
+                           <option value="Architect" selected>Architect</option>
+                           {% else %}
+                           <option value="Architect">Architect</option>
+                           {% endif %}
+                           {% if user.occupation == 'Artist' %}
+                           <option value="Artist" selected>Artist</option>
+                           {% else %}
+                           <option value="Artist">Artist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Baker' %}
+                           <option value="Baker" selected>Baker</option>
+                           {% else %}
+                           <option value="Baker">Baker</option>
+                           {% endif %}
+                           {% if user.occupation == 'Banker' %}
+                           <option value="Banker" selected>Banker</option>
+                           {% else %}
+                           <option value="Banker">Banker</option>
+                           {% endif %}
+                           {% if user.occupation == 'Barista' %}
+                           <option value="Barista" selected>Barista</option>
+                           {% else %}
+                           <option value="Barista">Barista</option>
+                           {% endif %}
+                           {% if user.occupation == 'Bartender' %}
+                           <option value="Bartender" selected>Bartender</option>
+                           {% else %}
+                           <option value="Bartender">Bartender</option>
+                           {% endif %}
+                           {% if user.occupation == 'Biologist' %}
+                           <option value="Biologist" selected>Biologist</option>
+                           {% else %}
+                           <option value="Biologist">Biologist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Carpenter' %}
+                           <option value="Carpenter" selected>Carpenter</option>
+                           {% else %}
+                           <option value="Carpenter">Carpenter</option>
+                           {% endif %}
+                           {% if user.occupation == 'Chef' %}
+                           <option value="Chef" selected>Chef</option>
+                           {% else %}
+                           <option value="Chef">Chef</option>
+                           {% endif %}
+                           {% if user.occupation == 'Cleaner' %}
+                           <option value="Cleaner" selected>Cleaner</option>
+                           {% else %}
+                           <option value="Cleaner">Cleaner</option>
+                           {% endif %}
+                           {% if user.occupation == 'Computer_Programmer' %}
+                           <option value="Computer_Programmer" selected>Computer Programmer</option>
+                           {% else %}
+                           <option value="Computer_Programmer">Computer Programmer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Dentist' %}
+                           <option value="Dentist" selected>Dentist</option>
+                           {% else %}
+                           <option value="Dentist">Dentist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Doctor' %}
+                           <option value="Doctor" selected>Doctor</option>
+                           {% else %}
+                           <option value="Doctor">Doctor</option>
+                           {% endif %}
+                           {% if user.occupation == 'Electrician' %}
+                           <option value="Electrician" selected>Electrician</option>
+                           {% else %}
+                           <option value="Electrician">Electrician</option>
+                           {% endif %}
+                           {% if user.occupation == 'Engineer' %}
+                           <option value="Engineer" selected>Engineer</option>
+                           {% else %}
+                           <option value="Engineer">Engineer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Farmer' %}
+                           <option value="Farmer" selected>Farmer</option>
+                           {% else %}
+                           <option value="Farmer">Farmer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Firefighter' %}
+                           <option value="Firefighter" selected>Firefighter</option>
+                           {% else %}
+                           <option value="Firefighter">Firefighter</option>
+                           {% endif %}
+                           {% if user.occupation == 'Fisherman' %}
+                           <option value="Fisherman" selected>Fisherman</option>
+                           {% else %}
+                           <option value="Fisherman">Fisherman</option>
+                           {% endif %}
+                           {% if user.occupation == 'Flight_Attendant' %}
+                           <option value="Flight_Attendant" selected>Flight Attendant</option>
+                           {% else %}
+                           <option value="Flight_Attendant">Flight Attendant</option>
+                           {% endif %}
+                           {% if user.occupation == 'Graphic_Designer' %}
+                           <option value="Graphic_Designer" selected>Graphic Designer</option>
+                           {% else %}
+                           <option value="Graphic_Designer">Graphic Designer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Hairdresser' %}
+                           <option value="Hairdresser" selected>Hairdresser</option>
+                           {% else %}
+                           <option value="Hairdresser">Hairdresser</option>
+                           {% endif %}
+                           {% if user.occupation == 'Journalist' %}
+                           <option value="Journalist" selected>Journalist</option>
+                           {% else %}
+                           <option value="Journalist">Journalist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Lawyer' %}
+                           <option value="Lawyer" selected>Lawyer</option>
+                           {% else %}
+                           <option value="Lawyer">Lawyer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Librarian' %}
+                           <option value="Librarian" selected>Librarian</option>
+                           {% else %}
+                           <option value="Librarian">Librarian</option>
+                           {% endif %}
+                           {% if user.occupation == 'Mechanic' %}
+                           <option value="Mechanic" selected>Mechanic</option>
+                           {% else %}
+                           <option value="Mechanic">Mechanic</option>
+                           {% endif %}
+                           {% if user.occupation == 'Musician' %}
+                           <option value="Musician" selected>Musician</option>
+                           {% else %}
+                           <option value="Musician">Musician</option>
+                           {% endif %}
+                           {% if user.occupation == 'Nurse' %}
+                           <option value="Nurse" selected>Nurse</option>
+                           {% else %}
+                           <option value="Nurse">Nurse</option>
+                           {% endif %}
+                           {% if user.occupation == 'Pharmacist' %}
+                           <option value="Pharmacist" selected>Pharmacist</option>
+                           {% else %}
+                           <option value="Pharmacist">Pharmacist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Photographer' %}
+                           <option value="Photographer" selected>Photographer</option>
+                           {% else %}
+                           <option value="Photographer">Photographer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Pilot' %}
+                           <option value="Pilot" selected>Pilot</option>
+                           {% else %}
+                           <option value="Pilot">Pilot</option>
+                           {% endif %}
+                           {% if user.occupation == 'Plumber' %}
+                           <option value="Plumber" selected>Plumber</option>
+                           {% else %}
+                           <option value="Plumber">Plumber</option>
+                           {% endif %}
+                           {% if user.occupation == 'Police_Officer' %}
+                           <option value="Police_Officer" selected>Police Officer</option>
+                           {% else %}
+                           <option value="Police_Officer">Police Officer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Professor' %}
+                           <option value="Professor" selected>Professor</option>
+                           {% else %}
+                           <option value="Professor">Professor</option>
+                           {% endif %}
+                           {% if user.occupation == 'Psychologist' %}
+                           <option value="Psychologist" selected>Psychologist</option>
+                           {% else %}
+                           <option value="Psychologist">Psychologist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Real_Estate_Agent' %}
+                           <option value="Real_Estate_Agent" selected>Real Estate Agent</option>
+                           {% else %}
+                           <option value="Real_Estate_Agent">Real Estate Agent</option>
+                           {% endif %}
+                           {% if user.occupation == 'Receptionist' %}
+                           <option value="Receptionist" selected>Receptionist</option>
+                           {% else %}
+                           <option value="Receptionist">Receptionist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Scientist' %}
+                           <option value="Scientist" selected>Scientist</option>
+                           {% else %}
+                           <option value="Scientist">Scientist</option>
+                           {% endif %}
+                           {% if user.occupation == 'Software_Developer' %}
+                           <option value="Software_Developer" selected>Software Developer</option>
+                           {% else %}
+                           <option value="Software_Developer">Software Developer</option>
+                           {% endif %}
+                           {% if user.occupation == 'Teacher' %}
+                           <option value="Teacher" selected>Teacher</option>
+                           {% else %}
+                           <option value="Teacher">Teacher</option>
+                           {% endif %}
+                           {% if user.occupation == 'Truck_Driver' %}
+                           <option value="Truck_Driver" selected>Truck Driver</option>
+                           {% else %}
+                           <option value="Truck_Driver">Truck Driver</option>
+                           {% endif %}
+                           {% if user.occupation == 'Veterinarian' %}
+                           <option value="Veterinarian" selected>Veterinarian</option>
+                           {% else %}
+                           <option value="Veterinarian">Veterinarian</option>
+                           {% endif %}
+                           {% if user.occupation == 'Waiter/Waitress' %}
+                           <option value="Waiter/Waitress" selected>Waiter/Waitress</option>
+                           {% else %}
+                           <option value="Waiter/Waitress">Waiter/Waitress</option>
+                           {% endif %}
+                           {% if user.occupation == 'Writer' %}
+                           <option value="Writer" selected>Writer</option>
+                           {% else %}
+                           <option value="Writer">Writer</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Monthly Income</label>
+                        <input type="number" name="monthly_income" value="{{user.monthly_income}}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label for="highest_education" class="form-label">Highest Education</label>
+                        <select id="highest_education" name="highest_education" required class="form-select">
+                           {% if user.highest_education == 'Primary' %}
+                           <option value="Primary" selected>Primary School</option>
+                           {% else %}
+                           <option value="Primary">Primary School</option>
+                           {% endif %}
+                           {% if user.highest_education == 'Secondary' %}
+                           <option value="Secondary" selected>Secondary School</option>
+                           {% else %}
+                           <option value="Secondary">Secondary School</option>
+                           {% endif %}
+                           {% if user.highest_education == 'High' %}
+                           <option value="High" selected>High School</option>
+                           {% else %}
+                           <option value="High">High School</option>
+                           {% endif %}
+                           {% if user.highest_education == 'Dip' %}
+                           <option value="Dip" selected>Diploma</option>
+                           {% else %}
+                           <option value="Dip">Diploma</option>
+                           {% endif %}
+                           {% if user.highest_education == 'Bachelors' %}
+                           <option value="Bachelor's" selected>Bachelor's Degree</option>
+                           {% else %}
+                           <option value="Bachelor's">Bachelor's Degree</option>
+                           {% endif %}
+                           {% if user.highest_education == 'Masters' %}
+                           <option value="Master's" selected>Master's Degree</option>
+                           {% else %}
+                           <option value="Master's">Master's Degree</option>
+                           {% endif %}
+                           {% if user.highest_education == 'Doctorate' %}
+                           <option value="Doctorate" selected>Doctorate</option>
+                           {% else %}
+                           <option value="Doctorate">Doctorate</option>
+                           {% endif %}
+                           
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Highest Education Mark(%)</label>
+                        <input type="number" name="highest_education_mark" value="{{user.highest_education_mark}}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label for="caste" class="form-label">Caste</label>
+                        <select id="caste" name="caste" required class="form-select">
+                           {% if user.caste == 'SC' %}
+                           <option value="SC" selected>Scheduled Caste (SC)</option>
+                           {% else %}
+                           <option value="SC">Scheduled Caste (SC)</option>
+                           {% endif %}
+                           {% if user.caste == 'ST' %}
+                           <option value="ST" selected>Scheduled Tribe (ST)</option>
+                           {% else %}
+                           <option value="ST">Scheduled Tribe (ST)</option>
+                           {% endif %}
+                           {% if user.caste == 'OBC' %}
+                           <option value="OBC" selected>Other Backward Class (OBC)</option>
+                           {% else %}
+                           <option value="OBC">Other Backward Class (OBC)</option>
+                           {% endif %}
+                           {% if user.caste == 'General' %}
+                           <option value="General" selected>General</option>
+                           {% else %}
+                           <option value="General">General</option>
+                           {% endif %}
+                           {% if user.caste == 'Prefer_not_to_say' %}
+                           <option value="Prefer_not_to_say" selected>Prefer not to say</option>
+                           {% else %}
+                           <option value="Prefer_not_to_say">Prefer not to say</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="religion" class="form-label">Religion</label>
+                        <select id="religion" name="religion" required class="form-select">
+                           {% if user.religion == 'Hin' %}
+                           <option value="Hin" selected>Hinduism</option>
+                           {% else %}
+                           <option value="Hin">Hinduism</option>
+                           {% endif %}
+                           {% if user.religion == 'Isl' %}
+                           <option value="Isl" selected>Islam</option>
+                           {% else %}
+                           <option value="Isl">Islam</option>
+                           {% endif %}
+                           {% if user.religion == 'Chr' %}
+                           <option value="Chr" selected>Christianity</option>
+                           {% else %}
+                           <option value="Chr">Christianity</option>
+                           {% endif %}
+                           {% if user.religion == 'Sik' %}
+                           <option value="Sik" selected>Sikhism</option>
+                           {% else %}
+                           <option value="Sik">Sikhism</option>
+                           {% endif %}
+                           {% if user.religion == 'Bud' %}
+                           <option value="Bud" selected>Buddhism</option>
+                           {% else %}
+                           <option value="Bud">Buddhism</option>
+                           {% endif %}
+                           {% if user.religion == 'Jai' %}
+                           <option value="Jai" selected>Jainism</option>
+                           {% else %}
+                           <option value="Jai">Jainism</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="has_disabilities" class="form-label">Do you have any disabilities?</label>
+                        <select id="has_disabilities" name="has_disabilities" required class="form-select">
+                           {% if user.has_disabilities == 'Yes' %}
+                           <option value="Yes" selected>Yes</option>
+                           {% else %}
+                           <option value="Yes">Yes</option>
+                           {% endif %}
+                           {% if user.has_disabilities == 'No' %}
+                           <option value="No" selected>No</option>
+                           {% else %}
+                           <option value="No">No</option>
+                           {% endif %}
+                        </select>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Specify Disabilities</label>
+                        <input type="text" name="disabilities_specify" value="{{user.disabilities_specify}}" class="form-control">
+                     </div>
+
+                     <div class="col-md-12">
+                        <h5 class="card-title">Bank Details</h5>
+                     </div>
+                     <div class="col-md-12">
+                        <label class="form-label">Account Number</label>
+                        <input type="number" name="account_number" value="{{user.account_number}}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Bank Name</label>
+                        <input type="text" name="bank_name" value="{{user.bank_name}}" required class="form-control">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">IFSC Code</label>
+                        <input type="text" name="ifsc_code" value="{{user.ifsc_code}}" required class="form-control">
+                     </div>
+
+                     <div class="col-md-12">
+                        <h5 class="card-title">Documents/ Proof</h5>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Aadhar Image</label>
+                        <input class="form-control" type="file" name="aadhar_img" value="{{ user.aadhar_img }}" required>
+                     </div>
+                     <div class="col-md-6">
+                        <label class="form-label">Identity Image</label>
+                        <input class="form-control" type="file" name="identity_img" value="{{ user.identity_img }}" required>
+                     </div>
+
+                     <div class="text-center mt-5 pb-3">
+                        <button type="reset" class="btn btn-secondary rounded-pill px-4 py-2 mx-1">Reset</button>
+                        <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 mx-1">Submit</button>
+                     </div>
+                  </form><!-- End Multi Columns Form -->
+            
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6"></div>
+
+      </div>
+   </section>
+
+</main><!-- End #main -->
+
+
+
+
+{% endblock main-content %}

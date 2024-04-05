@@ -1,0 +1,624 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- End Page Title -->
+   <section class="section profile">
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="card">
+               <div class="card-body pt-3">
+                  <!-- Bordered Tabs -->
+                  <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview"
+                           aria-selected="true" role="tab">Overview</button>
+                     </li>
+                  </ul>
+                  <div class="tab-content pt-2">
+                     <div class="tab-pane fade show active profile-overview" id="profile-overview" role="tabpanel"
+                        style="margin-left: 12px;">
+                        <h5 class="card-title">Basic Details</h5>
+                        {% for post in combined_data %}
+                        <div class="row">
+                           <div class="col-md-2">
+                              {% if post.user.profile_img %}
+                              <img src="{{ post.user.profile_img.url }}" alt="Profile" class="mb-3 img-fluid rounded">
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                           <div class="col-lg-9 col-md-8">
+                              {{ post.user.full_name }}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Username</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.username %}
+                              {{ post.user.username }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Age</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.age %}
+                              {{ post.user.age }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Date of Birth</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.dob %}
+                              {{ post.user.dob }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Gender</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.gender == 'M' %}
+                              Male
+                              {% elif post.user.gender == 'F' %}
+                              Female
+                              {% elif post.user.gender == 'O' %}
+                              Other
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Aadhar Number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.aadhar_no %}
+                              {{ post.user.aadhar_no }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Email Id</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.email %}
+                              {{ post.user.email }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Mobile Number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.mobile_no %}
+                              {{ post.user.mobile_no }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Address</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.address %}
+                              {{ post.user.address }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <h5 class="card-title">Personal Details</h5>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Father</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.father %}
+                              {{ post.user.father }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Mother</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.mother %}
+                              {{ post.user.mother }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Matirial status</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.marital_status == 'S' %}
+                              Single
+                              {% elif post.user.marital_status == 'M' %}
+                              Married
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Children</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.children_no %}
+                              {{ post.user.children_no }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Employment Status</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.employment_status == 'Emp' %}
+                              Employed
+                              {% elif post.user.employment_status == 'Unemp' %}
+                              Unemployed
+                              {% elif post.user.employment_status == 'Self-emp' %}
+                              Self-employed
+                              {% elif post.user.employment_status == 'Stud' %}
+                              Student
+                              {% elif post.user.employment_status == 'Ret' %}
+                              Retired
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Occupation</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.occupation == 'Government_Employee' %}
+                              Government Employee
+                              {% elif post.user.occupation == 'Accountant' %}
+                              Accountant
+                              {% elif post.user.occupation == 'Actor/Actress' %}
+                              Actor/Actress
+                              {% elif post.user.occupation == 'Architect' %}
+                              Architect
+                              {% elif post.user.occupation == 'Artist' %}
+                              Artist
+                              {% elif post.user.occupation == 'Baker' %}
+                              Baker
+                              {% elif post.user.occupation == 'Banker' %}
+                              Banker
+                              {% elif post.user.occupation == 'Barista' %}
+                              Barista
+                              {% elif post.user.occupation == 'Bartender' %}
+                              Bartender
+                              {% elif post.user.occupation == 'Biologist' %}
+                              Biologist
+                              {% elif post.user.occupation == 'Carpenter' %}
+                              Carpenter
+                              {% elif post.user.occupation == 'Chef' %}
+                              Chef
+                              {% elif post.user.occupation == 'Cleaner' %}
+                              Cleaner
+                              {% elif post.user.occupation == 'Computer_Programmer' %}
+                              Computer Programmer
+                              {% elif post.user.occupation == 'Dentist' %}
+                              Dentist
+                              {% elif post.user.occupation == 'Doctor' %}
+                              Doctor
+                              {% elif post.user.occupation == 'Electrician' %}
+                              Electrician
+                              {% elif post.user.occupation == 'Engineer' %}
+                              Engineer
+                              {% elif post.user.occupation == 'Farmer' %}
+                              Farmer
+                              {% elif post.user.occupation == 'Firefighter' %}
+                              Firefighter
+                              {% elif post.user.occupation == 'Fisherman' %}
+                              Fisherman
+                              {% elif post.user.occupation == 'Flight_Attendant' %}
+                              Flight Attendant
+                              {% elif post.user.occupation == 'Graphic_Designer' %}
+                              Graphic Designer
+                              {% elif post.user.occupation == 'Hairdresser' %}
+                              Hairdresser
+                              {% elif post.user.occupation == 'Journalist' %}
+                              Journalist
+                              {% elif post.user.occupation == 'Lawyer' %}
+                              Lawyer
+                              {% elif post.user.occupation == 'Librarian' %}
+                              Librarian
+                              {% elif post.user.occupation == 'Mechanic' %}
+                              Mechanic
+                              {% elif post.user.occupation == 'Musician' %}
+                              Musician
+                              {% elif post.user.occupation == 'Nurse' %}
+                              Nurse
+                              {% elif post.user.occupation == 'Pharmacist' %}
+                              Pharmacist
+                              {% elif post.user.occupation == 'Photographer' %}
+                              Photographer
+                              {% elif post.user.occupation == 'Pilot' %}
+                              Pilot
+                              {% elif post.user.occupation == 'Plumber' %}
+                              Plumber
+                              {% elif post.user.occupation == 'Police_Officer' %}
+                              Police Officer
+                              {% elif post.user.occupation == 'Professor' %}
+                              Professor
+                              {% elif post.user.occupation == 'Psychologist' %}
+                              Psychologist
+                              {% elif post.user.occupation == 'Real_Estate_Agent' %}
+                              Real Estate Agent
+                              {% elif post.user.occupation == 'Receptionist' %}
+                              Receptionist
+                              {% elif post.user.occupation == 'Scientist' %}
+                              Scientist
+                              {% elif post.user.occupation == 'Software_Developer' %}
+                              Software Developer
+                              {% elif post.user.occupation == 'Teacher' %}
+                              Teacher
+                              {% elif post.user.occupation == 'Truck_Driver' %}
+                              Truck Driver
+                              {% elif post.user.occupation == 'Veterinarian' %}
+                              Veterinarian
+                              {% elif post.user.occupation == 'Waiter/Waitress' %}
+                              Waiter/Waitress
+                              {% elif post.user.occupation == 'Writer' %}
+                              Writer
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Monthly income</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.monthly_income %}
+                              {{ post.user.monthly_income }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Education</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.highest_education == 'Primary' %}
+                              Primary School
+                              {% elif post.user.highest_education == 'Secondary' %}
+                              Secondary School
+                              {% elif post.user.highest_education == 'High' %}
+                              High School
+                              {% elif post.user.highest_education == 'Dip' %}
+                              Diploma
+                              {% elif post.user.highest_education == 'Bachelors' %}
+                              Bachelor's Degree
+                              {% elif post.user.highest_education == 'Masters' %}
+                              Master's Degree
+                              {% elif post.user.highest_education == 'Doctorate' %}
+                              Doctorate
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Highest Education Mark (%)</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.highest_education_mark %}
+                              {{ post.user.highest_education_mark }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Caste</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.caste == 'SC' %}
+                              Scheduled Caste (SC)
+                              {% elif post.user.caste == 'ST' %}
+                              Scheduled Tribe (ST)
+                              {% elif post.user.caste == 'OBC' %}
+                              Other Backward Class (OBC)
+                              {% elif post.user.caste == 'General' %}
+                              General
+                              {% elif post.user.caste == 'Prefer_not_to_say' %}
+                              Prefer not to say
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Religion</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.religion == 'Hin' %}
+                              Hinduism
+                              {% elif post.user.religion == 'Isl' %}
+                              Islam
+                              {% elif post.user.religion == 'Chr' %}
+                              Christianity
+                              {% elif post.user.religion == 'Sik' %}
+                              Sikhism
+                              {% elif post.user.religion == 'Bud' %}
+                              Buddhism
+                              {% elif post.user.religion == 'Jai' %}
+                              Jainism
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Disability choices</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.has_disabilities == 'Yes' %}
+                              Yes
+                              {% elif post.user.has_disabilities == 'No' %}
+                              No
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Disabilities_specify</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.disabilities_specify %}
+                              {{ post.user.disabilities_specify }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <h5 class="card-title">Bank Details</h5>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Bank name</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.bank_name %}
+                              {{ post.user.bank_name }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Account number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.account_number %}
+                              {{ post.user.account_number }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">IFSC code</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if post.user.ifsc_code %}
+                              {{ post.user.ifsc_code }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        {% endfor %}
+                        <h5 class="card-title text-danger">Additional Details </h5>
+
+                        <!-- Education -->
+                        {% for post in data_education %}
+                        {% if post.post.post_category == 'Education' %}
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Current School</div>
+                           <div class="col-lg-9 col-md-8">
+                              {{ post.current_school }}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Grade</div>
+                           <div class="col-lg-9 col-md-8">
+                              {{ post.grade }}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Academic Performance</div>
+                           <div class="col-lg-9 col-md-8">
+                              {{ post.academic_performance }}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Reason for post</div>
+                           <div class="col-lg-9 col-md-8">
+                              {{ post.post }}
+                           </div>
+                        </div>
+                        <h5 class="card-title">Application Status</h5>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <form method="post" id="healthcare">
+                                 {% csrf_token %}
+                                 <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                       <select id="is_approved" name="is_approved" required class="form-select">
+                                          {% if post.is_approved == True %}
+                                          <option value="True" selected>Approved</option>
+                                          {% else %}
+                                          <option value="True">Approved</option>
+                                          {% endif %}
+                                          {% if post.is_approved == False %}
+                                          <option value="False" selected>Pending</option>
+                                          {% else %}
+                                          <option value="False">Pending</option>
+                                          {% endif %}
+                                       </select>
+                                    </div>
+                                    <div class="col-md-4 mb-1 text-end">
+                                       <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- End Education -->
+
+                        <!-- Healthcare -->
+                        {% for post in data_health %}
+                        {% if post.post.post_category == 'Healthcare' %}
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">City</div>
+                           <div class="col-lg-9 col-md-8">{{ post.city }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Ration Card Number</div>
+                           <div class="col-lg-9 col-md-8">{{ post.ration_card_no }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Medical History</div>
+                           <div class="col-lg-9 col-md-8">{{ post.medical_history }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Allergies</div>
+                           <div class="col-lg-9 col-md-8">{{ post.allergies }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Height</div>
+                           <div class="col-lg-9 col-md-8">{{ post.height }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Weight</div>
+                           <div class="col-lg-9 col-md-8">{{ post.weight }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Blood Pressure Condition</div>
+                           <div class="col-lg-9 col-md-8">{{ post.blood_pressure_condition }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Blood Group</div>
+                           <div class="col-lg-9 col-md-8">{{ post.blood_group }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Vision Condition</div>
+                           <div class="col-lg-9 col-md-8">{{ post.vision_condition }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Hearing Condition</div>
+                           <div class="col-lg-9 col-md-8">{{ post.hearing_condition }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Health Insurance</div>
+                           <div class="col-lg-9 col-md-8">{{ post.health_insurance }}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">Government Health Card</div>
+                           <div class="col-lg-9 col-md-8">{{ post.govt_health_card }}</div>
+                        </div>
+                        <h5 class="card-title">Application Status</h5>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <form method="post" id="healthcare">
+                                 {% csrf_token %}
+                                 <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                       <select id="is_approved" name="is_approved" required class="form-select">
+                                          {% if post.is_approved == True %}
+                                          <option value="True" selected>Approved</option>
+                                          {% else %}
+                                          <option value="True">Approved</option>
+                                          {% endif %}
+                                          {% if post.is_approved == False %}
+                                          <option value="False" selected>Pending</option>
+                                          {% else %}
+                                          <option value="False">Pending</option>
+                                          {% endif %}
+                                       </select>
+                                    </div>
+                                    <div class="col-md-4 mb-1 text-end">
+                                       <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!-- End Healthcare -->
+
+                     </div>
+                  </div>
+                  <!-- End Bordered Tabs -->
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>
+{% endif %}
+{% endblock main-content %}
+<style>
+   table td a {
+      text-decoration: none !important;
+   }
+</style>
+<main id="main" class="main">
+   <div class="pagetitle">
+      <h1>All Post</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">All Post</li>
+         </ol>
+      </nav>
+   </div>
+   <!-- End Page Title -->
+   <section class="section dashboard">
+      <div class="row">
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+               <!-- Table 1 -->
+               <div class="col-12">
+                  <div class="card">
+                     <div class="card-body">
+                        {% if data %}
+                        <h5 class="card-title">All Post</h5>
+                        <p>Category {{post.user.post_category}}</p>
+                        {% else %}
+                        <p class="text-center mt-5 mb-4">
+                           <small>--- No Posts ---</small>
+                        </p>
+                        {% endif %}
+                        <!-- Alert Message -->
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div id="message" class="alert alert-{{ message.tags }} alert-danger fade show" role="alert">
+                           <span class="small">{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <script>
+                           setTimeout(function () {
+                              var message = document.getElementById('message');
+                              if (message) {
+                                 message.style.display = 'none';
+                              }
+                           }, 1500);
+                        </script>
+                        <!-- AdminApp/UserApplicationDetail.html -->
+                        <h1>User Application Details</h1>
+                        {% for post in data_education %}
+                        {% if post.post.post_category == 'Education' %}
+                        <p>Education</p>
+                        <p>User: {{ post.user.full_name }}</p>
+                        <p>aadhar_no: {{ post.user.aadhar_no }}</p>
+                        <p>Current School: {{ post.current_school }}</p>
+                        <p>Grade: {{ post.grade }}</p>
+                        <p>Academic Performance: {{ post.academic_performance }}</p>
+                        <p>Reason for post: {{ post.post }}</p>
+                        {% endif %}
+                        {% endfor %}
+                        {% for post in data_health %}
+                        {% if post.post.post_category == 'Healthcare' %}
+                        <p>Healthcare</p>
+                        <p>User: {{ post.user.full_name }}</p>
+                        <p>aadhar_no: {{ post.user.aadhar_no }}</p>
+                        <p>City: {{ post.city }}</p>
+                        <p>Ration Card No: {{ post.ration_card_no }}</p>
+                        <p>Medical History: {{ post.medical_history }}</p>
+                        <p>Allergies: {{ post.allergies }}</p>
+                        <p>Height: {{ post.height }}</p>
+                        <p>Weight: {{ post.weight }}</p>
+                        <p>Blood Pressure Condition: {{ post.blood_pressure_condition }}</p>
+                        <p>Blood Group: {{ post.blood_group }}</p>
+                        <p>Vision Condition: {{ post.vision_condition }}</p>
+                        <p>Hearing Condition: {{ post.hearing_condition }}</p>
+                        <p>Health Insurance: {{ post.health_insurance }}</p>
+                        <p>Govt Health Card: {{ post.govt_health_card }}</p>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- Add other fields as needed -->
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+            </div>
+         </div>
+         <!-- End Left side columns -->
+      </div>
+   </section>
+</main>
+<!-- End #main -->

@@ -1,0 +1,94 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+
+{% if user.profile_updated_flag %}
+
+<style>
+   .refreshbtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+   }
+</style>
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Error</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Error</li>
+         </ol>
+      </nav>
+
+   </div><!-- End Page Title -->
+
+
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-md-12">
+            <div class="row">
+
+
+               <!-- Table 1 -->
+               <div class="col-8 mx-auto" style="height: 60vh;">
+
+
+                  {% if messages %}
+                  {% for message in messages %}
+
+                  <div id="message" class="mt-5 py-4 alert text-center alert-{{ message.tags }} alert-info  fade show" role="alert">
+                     <span>{{ message }}</span>
+                  </div>
+                  <div style="margin-top: 50px;" class="d-flex justify-content-center">
+                     <button type="Cancel" onclick="window.history.go(-1);"
+                        class="btn btn-secondary rounded-pill px-4 py-2 mx-1">Goto Back</button>
+                  </div>
+                  
+                  {% endfor %}
+                  {% endif %}
+
+                  
+
+                  <!-- End Bordered Table -->
+
+               </div>
+            </div>
+         </div>
+         <!-- End Table 1 -->
+
+      </div>
+      </div><!-- End Left side columns -->
+
+      </div>
+   </section>
+
+</main>
+
+
+{% else %}
+
+<main id="main" class="main">
+   <div class="col-md-12 text-center py-5">
+      <h3>Your Registration Not Completed</h3>
+      please update your profile first.
+      <div class="col-12">
+         <a href="{% url 'register_two' %}" class="btn btn-primary px-3 rounded-pill mt-3" type="submit">Update Profile
+            Details</a>
+      </div>
+   </div>
+</main>
+
+{% endif %}
+
+
+
+{% endblock main-content %}

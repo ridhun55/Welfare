@@ -1,0 +1,110 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block main-content %}
+
+{% if user.profile_updated_flag %}
+
+<style>
+   .refreshbtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+   }
+</style>
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-md-12">
+            <div class="row">
+               {% for item in post %}
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body" style="padding: 20px;">
+                        <div class="d-flex align-items-center">
+                           <div>
+                              {% if item.post_img %}
+                              <img class="rounded" style="width: 100px; height: auto;margin-right: 10px;"
+                                 src="{{ item.post_img.url }}" alt="">
+                              {% else %}
+                              <img class="rounded border border-1"
+                                 style="width: 100px; height: auto;margin-right: 10px;"
+                                 src="{% static '\assets\img\empty-post.jpg' %}" alt="">
+                              {% endif %}
+                           </div>
+                           <div class="">
+                              <small class="px-3">Last Date</small> <br>
+                              <small class="text-danger px-3">{{ item.post_end_date | date:"d/ m/ Y" }}</small>
+                           </div>
+                           <div class="">
+                              <small class="px-3">Category</small> <br>
+                              <small class="px-3">
+                                 {% if item.post_category == 'Education' %}Education{% endif %}
+                                 {% if item.post_category == 'Healthcare' %}Healthcare{% endif %}
+                                 {% if item.post_category == 'Employment' %}Employment{% endif %}
+                                 {% if item.post_category == 'Social_Security' %}Social Security{% endif %}
+                                 {% if item.post_category == 'Housing' %}Housing{% endif %}
+                                 {% if item.post_category == 'Rural_Development' %}Rural Development{% endif %}
+                                 {% if item.post_category == 'Women_and_Child_Welfare' %}
+                                 Women and Child Welfare
+                                 {% endif %}
+                                 {% if item.post_category == 'Environment' %}Environment{% endif %}
+                                 {% if item.post_category == 'Disaster_Management' %}Disaster Management{% endif %}
+                                 {% if item.post_category == 'Minority_Welfare' %}Minority Welfare{% endif %}
+                              </small>
+                           </div>
+                        </div>
+                        <div>
+                           <h5 class="card-title pt-3 p-0">{{ item.post_title }}</h5>
+                           <p><small>{{ item.post_description | truncatewords_html:17 }}</small></p>
+                           <a href="{% url 'mypost_apply' item.id %}" class="btn btn-primary btn-sm">Apply Now</a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+            </div>
+         </div><!-- End Left side columns -->
+      </div>
+   </section>
+
+</main>
+
+<script>
+   // Function to reload the page
+   function refreshPage() {
+      window.location.reload();
+   }
+</script>
+
+{% else %}
+
+<main id="main" class="main">
+   <div class="col-md-12 text-center py-5">
+      <h3>Your Registration Not Completed</h3>
+      Please update your profile first.
+      <div class="col-12">
+         <a href="{% url 'register_two' %}" class="btn btn-primary px-3 rounded-pill mt-3" type="submit">Update Profile
+            Details</a>
+      </div>
+   </div>
+</main>
+
+{% endif %}
+
+{% endblock main-content %}

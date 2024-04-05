@@ -1,0 +1,678 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Create Welfare Post</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">Create New Post</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+               <style>
+                  .form-label{
+                     text-transform: capitalize;
+                  }
+               </style>
+
+               <!-- Table 1 -->
+               <div class="col-9">
+                  <div class="card">
+                     <div class="card-body">
+                        <h5 class="card-title">Post Details</h5>
+
+                        <!-- Alert Message -->
+                        
+                        {% if messages %}
+                        {% for message in messages %}
+                        
+                        <div id="message" class="alert alert-{{ message.tags }} alert-danger  fade show" role="alert">
+                           <span class="small">{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        
+                        <script>
+                           setTimeout(function () {
+                              var message = document.getElementById('message');
+                              if (message) {
+                                 message.style.display = 'none';
+                              }
+                           }, 5000);
+                        </script>
+
+                        <form method="post" enctype="multipart/form-data" class="row g-3">
+                           {% csrf_token %}
+                           <div class="col-md-12">
+                              <label class="form-label">Post Title</label>
+                              <input type="text" name="post_title" value="{{post.post_title}}" class="form-control"
+                                 required>
+                           </div>
+                           <div class="col-md-12">
+                              <label class="form-label">Post Description</label>
+                              <textarea class="form-control" style="height: 100px" name="post_description" value="{{post.post_description }}" required></textarea>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">post img</label>
+                              <input class="form-control" type="file" name="post_img">
+                           </div>
+
+                           <div class="col-md-6">
+                              <label for="post_category " class="form-label">post category</label>
+                              <select id="post_category" name="post_category" class="form-select" required>
+                                 {% if post.post_category == 'Education' %}
+                                 <option value="Education" selected>Education</option>
+                                 {% else %}
+                                 <option value="Education">Education</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Healthcare' %}
+                                 <option value="Healthcare" selected>Healthcare</option>
+                                 {% else %}
+                                 <option value="Healthcare">Healthcare</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Employment' %}
+                                 <option value="Employment" selected>Employment</option>
+                                 {% else %}
+                                 <option value="Employment">Employment</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Social_Security' %}
+                                 <option value="Social_Security" selected>Social Security</option>
+                                 {% else %}
+                                 <option value="Social_Security">Social Security</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Housing' %}
+                                 <option value="Housing" selected>Housing</option>
+                                 {% else %}
+                                 <option value="Housing">Housing</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Rural_Development' %}
+                                 <option value="Rural_Development" selected>Rural Development</option>
+                                 {% else %}
+                                 <option value="Rural_Development">Rural Development</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Women_and_Child_Welfare' %}
+                                 <option value="Women_and_Child_Welfare" selected>Women and Child Welfare</option>
+                                 {% else %}
+                                 <option value="Women_and_Child_Welfare">Women and Child Welfare</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Environment' %}
+                                 <option value="Environment" selected>Environment</option>
+                                 {% else %}
+                                 <option value="Environment">Environment</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Disaster_Management' %}
+                                 <option value="Disaster_Management" selected>Disaster Management</option>
+                                 {% else %}
+                                 <option value="Disaster_Management">Disaster Management</option>
+                                 {% endif %}
+                              
+                                 {% if post.post_category == 'Minority_Welfare' %}
+                                 <option value="Minority_Welfare" selected>Minority Welfare</option>
+                                 {% else %}
+                                 <option value="Minority_Welfare">Minority Welfare</option>
+                                 {% endif %}
+
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">post start date</label>
+                              <input class="form-control" type="date" name="post_start_date" value="{{ post.post_start_date }}" required>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">post end date</label>
+                              <input class="form-control" type="date" name="post_end_date" value="{{ post.post_end_date }}" required>
+                           </div>
+
+
+                           <h5 class="card-title">Post Eligibility</h5>
+
+                           <div class="col-md-4">
+                              <label class="form-label">age limit</label>
+                              <input type="number" name="post_age" value="{% if post.post_age %}{{ post.post_age }}{% else %}0{% endif %}" class="form-control">
+                           </div>
+                           <div class="col-md-4">
+                              <label for="post_gender" class="form-label">post gender</label>
+                              <select id="post_gender" name="post_gender" class="form-select" required>
+                                 {% if post.post_gender == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_gender == 'M' %}
+                                 <option value="M" selected>Male</option>
+                                 {% else %}
+                                 <option value="M">Male</option>
+                                 {% endif %}
+                                 {% if post.post_gender == 'F' %}
+                                 <option value="F" selected>Female</option>
+                                 {% else %}
+                                 <option value="F">Female</option>
+                                 {% endif %}
+                                 {% if post.post_gender == 'O' %}
+                                 <option value="O" selected>Other</option>
+                                 {% else %}
+                                 <option value="O">Other</option>
+                                 {% endif %}
+                                 
+                              </select>
+                           </div>
+                           
+
+                           <div class="col-md-4">
+                              <label for="post_marital_status " class="form-label">Marital Status</label>
+                              <select id="post_marital_status " name="post_marital_status" required class="form-select">
+                                 {% if post.post_marital_status == 'Both' %}
+                                 <option value="Both" selected>Both</option>
+                                 {% else %}
+                                 <option value="Both">Both</option>
+                                 {% endif %}
+                                 {% if post.post_marital_status  == 'S' %}
+                                 <option value="S" selected>Single</option>
+                                 {% else %}
+                                 <option value="S">Single</option>
+                                 {% endif %}
+                                 {% if post.post_marital_status  == 'M' %}
+                                 <option value="M" selected>Married</option>
+                                 {% else %}
+                                 <option value="M">Married</option>
+                                 {% endif %}
+                                 
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">max. No children</label>
+                              <input type="number" name="post_children" value="{% if post.post_children %}{{ post.post_children }}{% else %}0{% endif %}"
+                                 class="form-control">
+                           </div>
+                           <div class="col-md-6">
+                              <label for="post_employment_status " class="form-label">post employment status</label>
+                              <select id="post_employment_status " name="post_employment_status " required class="form-select">
+                                 {% if post.post_employment_status == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_employment_status  == 'Emp' %}
+                                 <option value="Emp" selected>Employed</option>
+                                 {% else %}
+                                 <option value="Emp">Employed</option>
+                                 {% endif %}
+                                 {% if post.post_employment_status  == 'Unemp' %}
+                                 <option value="Unemp" selected>Unemployed</option>
+                                 {% else %}
+                                 <option value="Unemp">Unemployed</option>
+                                 {% endif %}
+                                 {% if post.post_employment_status  == 'Self-emp' %}
+                                 <option value="Self-emp" selected>Self-employed</option>
+                                 {% else %}
+                                 <option value="Self-emp">Self-employed</option>
+                                 {% endif %}
+                                 {% if post.post_employment_status  == 'Stud' %}
+                                 <option value="Stud" selected>Student</option>
+                                 {% else %}
+                                 <option value="Stud">Student</option>
+                                 {% endif %}
+                                 {% if post.post_employment_status  == 'Ret' %}
+                                 <option value="Ret" selected>Retired</option>
+                                 {% else %}
+                                 <option value="Ret">Retired</option>
+                                 {% endif %}
+                                 
+                              </select>
+                           </div>
+
+
+
+                           <!-- ======== -->
+                           <div class="col-md-6">
+                              <label for="post_occupation" class="form-label">post occupation</label>
+                              <select id="post_occupation" name="post_occupation" required class="form-select">
+                                 {% if post.post_occupation == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Government_Employee' %}
+                                 <option value="Government_Employee" selected>Government Employee</option>
+                                 {% else %}
+                                 <option value="Government_Employee">Government Employee</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Accountant' %}
+                                 <option value="Accountant" selected>Accountant</option>
+                                 {% else %}
+                                 <option value="Accountant">Accountant</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Actor/Actress' %}
+                                 <option value="Actor/Actress" selected>Actor/Actress</option>
+                                 {% else %}
+                                 <option value="Actor/Actress">Actor/Actress</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Architect' %}
+                                 <option value="Architect" selected>Architect</option>
+                                 {% else %}
+                                 <option value="Architect">Architect</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Artist' %}
+                                 <option value="Artist" selected>Artist</option>
+                                 {% else %}
+                                 <option value="Artist">Artist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Baker' %}
+                                 <option value="Baker" selected>Baker</option>
+                                 {% else %}
+                                 <option value="Baker">Baker</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Banker' %}
+                                 <option value="Banker" selected>Banker</option>
+                                 {% else %}
+                                 <option value="Banker">Banker</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Barista' %}
+                                 <option value="Barista" selected>Barista</option>
+                                 {% else %}
+                                 <option value="Barista">Barista</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Bartender' %}
+                                 <option value="Bartender" selected>Bartender</option>
+                                 {% else %}
+                                 <option value="Bartender">Bartender</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Biologist' %}
+                                 <option value="Biologist" selected>Biologist</option>
+                                 {% else %}
+                                 <option value="Biologist">Biologist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Carpenter' %}
+                                 <option value="Carpenter" selected>Carpenter</option>
+                                 {% else %}
+                                 <option value="Carpenter">Carpenter</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Chef' %}
+                                 <option value="Chef" selected>Chef</option>
+                                 {% else %}
+                                 <option value="Chef">Chef</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Cleaner' %}
+                                 <option value="Cleaner" selected>Cleaner</option>
+                                 {% else %}
+                                 <option value="Cleaner">Cleaner</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Computer_Programmer' %}
+                                 <option value="Computer_Programmer" selected>Computer Programmer</option>
+                                 {% else %}
+                                 <option value="Computer_Programmer">Computer Programmer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Dentist' %}
+                                 <option value="Dentist" selected>Dentist</option>
+                                 {% else %}
+                                 <option value="Dentist">Dentist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Doctor' %}
+                                 <option value="Doctor" selected>Doctor</option>
+                                 {% else %}
+                                 <option value="Doctor">Doctor</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Electrician' %}
+                                 <option value="Electrician" selected>Electrician</option>
+                                 {% else %}
+                                 <option value="Electrician">Electrician</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Engineer' %}
+                                 <option value="Engineer" selected>Engineer</option>
+                                 {% else %}
+                                 <option value="Engineer">Engineer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Farmer' %}
+                                 <option value="Farmer" selected>Farmer</option>
+                                 {% else %}
+                                 <option value="Farmer">Farmer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Firefighter' %}
+                                 <option value="Firefighter" selected>Firefighter</option>
+                                 {% else %}
+                                 <option value="Firefighter">Firefighter</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Fisherman' %}
+                                 <option value="Fisherman" selected>Fisherman</option>
+                                 {% else %}
+                                 <option value="Fisherman">Fisherman</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Flight_Attendant' %}
+                                 <option value="Flight_Attendant" selected>Flight Attendant</option>
+                                 {% else %}
+                                 <option value="Flight_Attendant">Flight Attendant</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Graphic_Designer' %}
+                                 <option value="Graphic_Designer" selected>Graphic Designer</option>
+                                 {% else %}
+                                 <option value="Graphic_Designer">Graphic Designer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Hairdresser' %}
+                                 <option value="Hairdresser" selected>Hairdresser</option>
+                                 {% else %}
+                                 <option value="Hairdresser">Hairdresser</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Journalist' %}
+                                 <option value="Journalist" selected>Journalist</option>
+                                 {% else %}
+                                 <option value="Journalist">Journalist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Lawyer' %}
+                                 <option value="Lawyer" selected>Lawyer</option>
+                                 {% else %}
+                                 <option value="Lawyer">Lawyer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Librarian' %}
+                                 <option value="Librarian" selected>Librarian</option>
+                                 {% else %}
+                                 <option value="Librarian">Librarian</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Mechanic' %}
+                                 <option value="Mechanic" selected>Mechanic</option>
+                                 {% else %}
+                                 <option value="Mechanic">Mechanic</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Musician' %}
+                                 <option value="Musician" selected>Musician</option>
+                                 {% else %}
+                                 <option value="Musician">Musician</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Nurse' %}
+                                 <option value="Nurse" selected>Nurse</option>
+                                 {% else %}
+                                 <option value="Nurse">Nurse</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Pharmacist' %}
+                                 <option value="Pharmacist" selected>Pharmacist</option>
+                                 {% else %}
+                                 <option value="Pharmacist">Pharmacist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Photographer' %}
+                                 <option value="Photographer" selected>Photographer</option>
+                                 {% else %}
+                                 <option value="Photographer">Photographer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Pilot' %}
+                                 <option value="Pilot" selected>Pilot</option>
+                                 {% else %}
+                                 <option value="Pilot">Pilot</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Plumber' %}
+                                 <option value="Plumber" selected>Plumber</option>
+                                 {% else %}
+                                 <option value="Plumber">Plumber</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Police_Officer' %}
+                                 <option value="Police_Officer" selected>Police Officer</option>
+                                 {% else %}
+                                 <option value="Police_Officer">Police Officer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Professor' %}
+                                 <option value="Professor" selected>Professor</option>
+                                 {% else %}
+                                 <option value="Professor">Professor</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Psychologist' %}
+                                 <option value="Psychologist" selected>Psychologist</option>
+                                 {% else %}
+                                 <option value="Psychologist">Psychologist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Real_Estate_Agent' %}
+                                 <option value="Real_Estate_Agent" selected>Real Estate Agent</option>
+                                 {% else %}
+                                 <option value="Real_Estate_Agent">Real Estate Agent</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Receptionist' %}
+                                 <option value="Receptionist" selected>Receptionist</option>
+                                 {% else %}
+                                 <option value="Receptionist">Receptionist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Scientist' %}
+                                 <option value="Scientist" selected>Scientist</option>
+                                 {% else %}
+                                 <option value="Scientist">Scientist</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Software_Developer' %}
+                                 <option value="Software_Developer" selected>Software Developer</option>
+                                 {% else %}
+                                 <option value="Software_Developer">Software Developer</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Teacher' %}
+                                 <option value="Teacher" selected>Teacher</option>
+                                 {% else %}
+                                 <option value="Teacher">Teacher</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Truck_Driver' %}
+                                 <option value="Truck_Driver" selected>Truck Driver</option>
+                                 {% else %}
+                                 <option value="Truck_Driver">Truck Driver</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Veterinarian' %}
+                                 <option value="Veterinarian" selected>Veterinarian</option>
+                                 {% else %}
+                                 <option value="Veterinarian">Veterinarian</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Waiter/Waitress' %}
+                                 <option value="Waiter/Waitress" selected>Waiter/Waitress</option>
+                                 {% else %}
+                                 <option value="Waiter/Waitress">Waiter/Waitress</option>
+                                 {% endif %}
+                                 {% if post.post_occupation == 'Writer' %}
+                                 <option value="Writer" selected>Writer</option>
+                                 {% else %}
+                                 <option value="Writer">Writer</option>
+                                 {% endif %}
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">max. monthly income</label>
+                              <input type="number" name="post_monthly_income" value="{% if post.post_monthly_income %}{{ post.post_monthly_income }}{% else %}0{% endif %}" 
+                                 class="form-control">
+                           </div>
+                           <div class="col-md-6">
+                              <label for="post_highest_education" class="form-label">min. education</label>
+                              <select id="post_highest_education" name="post_highest_education" required class="form-select">
+                                 {% if post.post_highest_education == 'NA' %}
+                                 <option value="NA" selected>NA</option>
+                                 {% else %}
+                                 <option value="NA">NA</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Primary' %}
+                                 <option value="Primary" selected>Primary School</option>
+                                 {% else %}
+                                 <option value="Primary">Primary School</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Secondary' %}
+                                 <option value="Secondary" selected>Secondary School</option>
+                                 {% else %}
+                                 <option value="Secondary">Secondary School</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'High' %}
+                                 <option value="High" selected>High School</option>
+                                 {% else %}
+                                 <option value="High">High School</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Dip' %}
+                                 <option value="Dip" selected>Diploma</option>
+                                 {% else %}
+                                 <option value="Dip">Diploma</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Bachelors' %}
+                                 <option value="Bachelor's" selected>Bachelor's Degree</option>
+                                 {% else %}
+                                 <option value="Bachelor's">Bachelor's Degree</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Masters' %}
+                                 <option value="Master's" selected>Master's Degree</option>
+                                 {% else %}
+                                 <option value="Master's">Master's Degree</option>
+                                 {% endif %}
+                                 {% if post.post_highest_education == 'Doctorate' %}
+                                 <option value="Doctorate" selected>Doctorate</option>
+                                 {% else %}
+                                 <option value="Doctorate">Doctorate</option>
+                                 {% endif %}
+
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label class="form-label">min. Education Mark(%)</label>
+                              <input type="number" name="post_highest_education_mark" value="{% if post.post_highest_education_mark %}{{ post.post_highest_education_mark }}{% else %}0{% endif %}"
+                                 required class="form-control">
+                           </div>
+                           <div class="col-md-6">
+                              <label for="post_caste" class="form-label">post caste</label>
+                              <select id="post_caste" name="post_caste" required class="form-select">
+                                 {% if post.post_caste == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_caste == 'SC' %}
+                                 <option value="SC" selected>Scheduled post_caste (SC)</option>
+                                 {% else %}
+                                 <option value="SC">Scheduled post_caste (SC)</option>
+                                 {% endif %}
+                                 {% if post.post_caste == 'ST' %}
+                                 <option value="ST" selected>Scheduled Tribe (ST)</option>
+                                 {% else %}
+                                 <option value="ST">Scheduled Tribe (ST)</option>
+                                 {% endif %}
+                                 {% if post.post_caste == 'OBC' %}
+                                 <option value="OBC" selected>Other Backward Class (OBC)</option>
+                                 {% else %}
+                                 <option value="OBC">Other Backward Class (OBC)</option>
+                                 {% endif %}
+                                 {% if post.post_caste == 'General' %}
+                                 <option value="General" selected>General</option>
+                                 {% else %}
+                                 <option value="General">General</option>
+                                 {% endif %}
+                                 {% if post.post_caste == 'Prefer_not_to_say' %}
+                                 <option value="Prefer_not_to_say" selected>Prefer not to say</option>
+                                 {% else %}
+                                 <option value="Prefer_not_to_say">Prefer not to say</option>
+                                 {% endif %}
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label for="post_religion" class="form-label">post religion</label>
+                              <select id="post_religion" name="post_religion" required class="form-select">
+                                 {% if post.post_religion == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Hin' %}
+                                 <option value="Hin" selected>Hinduism</option>
+                                 {% else %}
+                                 <option value="Hin">Hinduism</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Isl' %}
+                                 <option value="Isl" selected>Islam</option>
+                                 {% else %}
+                                 <option value="Isl">Islam</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Chr' %}
+                                 <option value="Chr" selected>Christianity</option>
+                                 {% else %}
+                                 <option value="Chr">Christianity</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Sik' %}
+                                 <option value="Sik" selected>Sikhism</option>
+                                 {% else %}
+                                 <option value="Sik">Sikhism</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Bud' %}
+                                 <option value="Bud" selected>Buddhism</option>
+                                 {% else %}
+                                 <option value="Bud">Buddhism</option>
+                                 {% endif %}
+                                 {% if post.post_religion == 'Jai' %}
+                                 <option value="Jai" selected>Jainism</option>
+                                 {% else %}
+                                 <option value="Jai">Jainism</option>
+                                 {% endif %}
+                              </select>
+                           </div>
+                           <div class="col-md-6">
+                              <label for="post_has_disabilities" class="form-label">post has_disabilities</label>
+                              <select id="post_has_disabilities" name="post_has_disabilities" required class="form-select">
+                                 {% if post.post_has_disabilities == 'All' %}
+                                 <option value="All" selected>All</option>
+                                 {% else %}
+                                 <option value="All">All</option>
+                                 {% endif %}
+                                 {% if post.post_has_disabilities == 'Yes' %}
+                                 <option value="Yes" selected>Yes</option>
+                                 {% else %}
+                                 <option value="Yes">Yes</option>
+                                 {% endif %}
+                                 {% if post.post_has_disabilities == 'No' %}
+                                 <option value="No" selected>No</option>
+                                 {% else %}
+                                 <option value="No">No</option>
+                                 {% endif %}
+                              </select>
+                           </div>
+
+
+                           <div class="text-center mt-5 pb-3">
+                              <button type="reset" class="btn btn-secondary rounded-pill px-4 py-2 mx-1">Reset</button>
+                              <button type="submit" class="btn btn-primary rounded-pill px-4 py-2 mx-1">Submit</button>
+                           </div>
+                        </form><!-- End Multi Columns Form -->
+
+
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+
+            </div>
+         </div><!-- End Left side columns -->
+
+      </div>
+   </section>
+
+
+
+
+
+
+
+
+</main><!-- End #main -->
+
+
+{% endif %}
+{% endblock main-content %}

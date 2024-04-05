@@ -1,0 +1,342 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Post Details</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">{{ post.post_title }}</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+
+               <!-- Table 1 -->
+               <div class="col-md-12 col-lg-10">
+                  <div class="card">
+                     <div class="card-body">
+                        {% if post %}
+                        
+                        <div class="px-4 py-5">
+                           
+                           <h2>{{ post.post_title }}</h2>
+                           {% if user.is_authenticated and user.is_superuser %}
+                           <a class="float-end" href="{% url 'post_update' post.id %}">[Edit Post]</a>
+                           {% endif %}
+                           
+                              <small>{{ post.post_create_date }}</small>
+                              
+                           <br>
+                           <br>
+                           {% if post.post_img %}
+                           <img class="img-fluid" src="{{post.post_img.url}}" alt="">
+                           <br>
+                           <br>
+                           {% endif %}
+
+                           <small>Description</small>
+                           <p class="mt-2">{{ post.post_description }}</p>
+                           <table class="table table-sm table-borderless">
+                              <tr>
+                                 <th>Welfare Category</th>
+                                 <th>Apply Start Date</th>
+                                 <th>Apply End Date</th>
+                              </tr>
+                              <tr>
+                                 <td>{{ post.post_category }}</td>
+                                 <td>{{ post.post_start_date }}</td>
+                                 <td>{{ post.post_start_date }}</td>
+                              </tr>
+                           </table>
+                           <br>
+                           <h5 class="card-title">Eligibility Criteria</h5>
+
+                           <table class="table table-bordered table-responsive">
+                              <tr>
+                                 {% if post.post_age > '0' %}
+                                 <th>Age</th>
+                                 {% endif %}
+
+                                 <th>Gender</th>
+
+                                 <th>Marital Status</th>
+
+                                 {% if post.post_children > '0' %}
+                                 <th>No Of Children</th>
+                                 {% endif %}
+
+                                 <th>Employment Status</th>
+
+                              </tr>
+                              <tr>
+                                 {% if post.post_age > '0' %}
+                                 <td>{{ post.post_age }}</td>
+                                 {% endif %}
+
+                                 <td>
+                                    {% if post.post_gender == 'M' %}
+                                    Male
+                                    {% elif post.post_gender == 'F' %}
+                                    Female
+                                    {% elif post.post_gender == 'O' %}
+                                    Other
+                                    {% elif post.post_gender == 'All' %}
+                                    All
+                                    {% endif %}
+                                 </td>
+
+                                 <td>
+                                    {% if post.post_marital_status == 'S' %}
+                                    Single
+                                    {% elif post.post_marital_status == 'M' %}
+                                    Married
+                                    {% elif post.post_marital_status == 'Both' %}
+                                    Both
+                                    {% endif %}
+                                 </td>
+
+                                 {% if post.post_children > '0' %}
+                                 <td>{{ post.post_children }}</td>
+                                 {% endif %}
+
+
+                                 <td>
+                                    {% if post.post_employment_status == 'Emp' %}
+                                    Employed
+                                    {% elif post.post_employment_status == 'Unemp' %}
+                                    Unemployed
+                                    {% elif post.post_employment_status == 'Self-emp' %}
+                                    Self-employed
+                                    {% elif post.post_employment_status == 'Stud' %}
+                                    Student
+                                    {% elif post.post_employment_status == 'Ret' %}
+                                    Retired
+                                    {% elif post.post_employment_status == 'All' %}
+                                    All
+                                    {% endif %}
+                                 </td>
+
+                              </tr>
+                           </table>
+                           <table class="table table-bordered table-responsive">
+                              <tr>
+                                 <th>Occupation</th>
+                                 <th>Highest Education</th>
+                                 <th>Caste</th>
+                                 <th>Religion</th>
+                                 <th>Disabilities</th>
+                              </tr>
+                              <tr>
+                                 <td>{% if post.post_occupation == 'Government_Employee' %}
+                                    Government Employee
+                                    {% elif post.post_occupation == 'Accountant' %}
+                                    Accountant
+                                    {% elif post.post_occupation == 'Actor/Actress' %}
+                                    Actor/Actress
+                                    {% elif post.post_occupation == 'Architect' %}
+                                    Architect
+                                    {% elif post.post_occupation == 'Artist' %}
+                                    Artist
+                                    {% elif post.post_occupation == 'Baker' %}
+                                    Baker
+                                    {% elif post.post_occupation == 'Banker' %}
+                                    Banker
+                                    {% elif post.post_occupation == 'Barista' %}
+                                    Barista
+                                    {% elif post.post_occupation == 'Bartender' %}
+                                    Bartender
+                                    {% elif post.post_occupation == 'Biologist' %}
+                                    Biologist
+                                    {% elif post.post_occupation == 'Carpenter' %}
+                                    Carpenter
+                                    {% elif post.post_occupation == 'Chef' %}
+                                    Chef
+                                    {% elif post.post_occupation == 'Cleaner' %}
+                                    Cleaner
+                                    {% elif post.post_occupation == 'Computer_Programmer' %}
+                                    Computer Programmer
+                                    {% elif post.post_occupation == 'Dentist' %}
+                                    Dentist
+                                    {% elif post.post_occupation == 'Doctor' %}
+                                    Doctor
+                                    {% elif post.post_occupation == 'Electrician' %}
+                                    Electrician
+                                    {% elif post.post_occupation == 'Engineer' %}
+                                    Engineer
+                                    {% elif post.post_occupation == 'Farmer' %}
+                                    Farmer
+                                    {% elif post.post_occupation == 'Firefighter' %}
+                                    Firefighter
+                                    {% elif post.post_occupation == 'Fisherman' %}
+                                    Fisherman
+                                    {% elif post.post_occupation == 'Flight_Attendant' %}
+                                    Flight Attendant
+                                    {% elif post.post_occupation == 'Graphic_Designer' %}
+                                    Graphic Designer
+                                    {% elif post.post_occupation == 'Hairdresser' %}
+                                    Hairdresser
+                                    {% elif post.post_occupation == 'Journalist' %}
+                                    Journalist
+                                    {% elif post.post_occupation == 'Lawyer' %}
+                                    Lawyer
+                                    {% elif post.post_occupation == 'Librarian' %}
+                                    Librarian
+                                    {% elif post.post_occupation == 'Mechanic' %}
+                                    Mechanic
+                                    {% elif post.post_occupation == 'Musician' %}
+                                    Musician
+                                    {% elif post.post_occupation == 'Nurse' %}
+                                    Nurse
+                                    {% elif post.post_occupation == 'Pharmacist' %}
+                                    Pharmacist
+                                    {% elif post.post_occupation == 'Photographer' %}
+                                    Photographer
+                                    {% elif post.post_occupation == 'Pilot' %}
+                                    Pilot
+                                    {% elif post.post_occupation == 'Plumber' %}
+                                    Plumber
+                                    {% elif post.post_occupation == 'Police_Officer' %}
+                                    Police Officer
+                                    {% elif post.post_occupation == 'Professor' %}
+                                    Professor
+                                    {% elif post.post_occupation == 'Psychologist' %}
+                                    Psychologist
+                                    {% elif post.post_occupation == 'Real_Estate_Agent' %}
+                                    Real Estate Agent
+                                    {% elif post.post_occupation == 'Receptionist' %}
+                                    Receptionist
+                                    {% elif post.post_occupation == 'Scientist' %}
+                                    Scientist
+                                    {% elif post.post_occupation == 'Software_Developer' %}
+                                    Software Developer
+                                    {% elif post.post_occupation == 'Teacher' %}
+                                    Teacher
+                                    {% elif post.post_occupation == 'Truck_Driver' %}
+                                    Truck Driver
+                                    {% elif post.post_occupation == 'Veterinarian' %}
+                                    Veterinarian
+                                    {% elif post.post_occupation == 'Waiter/Waitress' %}
+                                    Waiter/Waitress
+                                    {% elif post.post_occupation == 'Writer' %}
+                                    Writer
+                                    {% elif post.post_occupation == 'All' %}
+                                    All
+                                    {% endif %}
+                                 </td>
+                                 <td>
+                                    {% if post.post_highest_education == 'Primary' %}
+                                    Primary School
+                                    {% elif post.post_highest_education == 'Secondary' %}
+                                    Secondary School
+                                    {% elif post.post_highest_education == 'High' %}
+                                    High School
+                                    {% elif post.post_highest_education == 'Dip' %}
+                                    Diploma
+                                    {% elif post.post_highest_education == 'Bachelors' %}
+                                    Bachelor's Degree
+                                    {% elif post.post_highest_education == 'Masters' %}
+                                    Master's Degree
+                                    {% elif post.post_highest_education == 'Doctorate' %}
+                                    Doctorate
+                                    {% elif post.post_highest_education == 'All' %}
+                                    All
+                                    {% elif post.post_highest_education == 'NA' %}
+                                    NA
+                                    {% endif %}
+                                 </td>
+
+                                 <td>
+                                    {% if post.post_caste == 'SC' %}
+                                    Scheduled Caste (SC)
+                                    {% elif post.post_caste == 'ST' %}
+                                    Scheduled Tribe (ST)
+                                    {% elif post.post_caste == 'OBC' %}
+                                    Other Backward Class (OBC)
+                                    {% elif post.post_caste == 'General' %}
+                                    General
+                                    {% elif post.post_caste == 'Prefer_not_to_say' %}
+                                    Prefer not to say
+                                    {% elif post.post_caste == 'All' %}
+                                    All
+                                    {% elif post.post_caste == 'NA' %}
+                                    NA
+                                    {% endif %}
+                                 </td>
+
+                                 <td>
+                                    {% if post.post_religion == 'Hin' %}
+                                    Hinduism
+                                    {% elif post.post_religion == 'Isl' %}
+                                    Islam
+                                    {% elif post.post_religion == 'Chr' %}
+                                    Christianity
+                                    {% elif post.post_religion == 'Sik' %}
+                                    Sikhism
+                                    {% elif post.post_religion == 'Bud' %}
+                                    Buddhism
+                                    {% elif post.post_religion == 'Jai' %}
+                                    Jainism
+                                    {% elif post.post_religion == 'All' %}
+                                    All
+                                    {% endif %}
+                                 </td>
+
+                                 <td>
+                                    {% if post.post_has_disabilities == 'Yes' %}
+                                    Yes
+                                    {% elif post.post_has_disabilities == 'No' %}
+                                    No
+                                    {% elif post.post_has_disabilities == 'All' %}
+                                    All
+                                    {% endif %}
+                                 </td>
+                              </tr>
+                           </table>
+                        </div>
+                        
+                        {% else %}
+                        <p class="text-center mt-5 mb-4">
+                           <small>--- No Posts ---</small>
+                        </p>
+                        {% endif %}
+
+
+
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+
+            </div>
+         </div><!-- End Left side columns -->
+
+      </div>
+   </section>
+
+
+
+
+
+
+
+
+</main><!-- End #main -->
+
+
+{% endif %}
+{% endblock main-content %}

@@ -1,0 +1,13 @@
+Abstract:
+
+The Welfare WebApp Using Django is a web application designed to simplify the process of accessing welfare benefits for individuals. This project aims to create a user-friendly platform that allows users to register, login, and manage their profiles easily. The application uses a one-time Aadhar-based registration system to ensure that each user is uniquely identified and to prevent duplicate registrations.
+
+After registering, users can view and update their profiles, providing essential information such as caste, religion, job, education, marks, metriculation status, and occupation. This information is crucial for determining the eligibility of users for various welfare benefits.
+
+One of the key features of the Welfare WebApp is the verification process conducted by the administrator. Once a user's profile is verified, the user can access welfare benefits tailored to their eligibility criteria. These criteria are based on the information provided during registration, such as caste, religion, job, education, marks, metriculation status, and occupation.
+
+Users can apply directly for welfare benefits from the website, eliminating the need for manual paperwork. All sections of the website, including user profiles and welfare posts, are created and managed from the admin section.
+
+The admin section allows administrators to create welfare posts, verify user profiles, and process welfare applications. Administrators also have the right to delete user accounts if necessary, ensuring the integrity and security of the platform.
+
+Overall, the Welfare WebApp Using Django aims to provide a centralized and efficient solution for managing welfare benefits, benefiting both users and administrators alike. The project leverages the Django framework to create a robust and user-friendly web application that simplifies the process of accessing welfare benefits.

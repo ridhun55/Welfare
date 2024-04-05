@@ -1,0 +1,488 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Profile</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item">Dashboard</li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item">Profile</li>
+            <li class="breadcrumb-item">All Profile</li>
+            <li class="breadcrumb-item active">{{ data.full_name }}</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section profile">
+      <div class="row">
+         <div class="col-xl-4">
+
+            <div class="card">
+               <div class="card-body profile-card pt-5 d-flex flex-column align-items-center">
+
+                  {% if data.profile_img %}
+                  <img src="{{ data.profile_img.url }}" alt="Profile" class="mt-3">
+                  {% endif %}
+                  <h2 class="mt-4 mb-2">{{ data.full_name }}</h2>
+                  <div class="text-center pb-4">
+                     Email : {{ data.email }}
+                     <br>
+                     Mobile No : {{ data.mobile_no }}
+                  </div>
+               </div>
+            </div>
+
+            <div class="card">
+               <div class="card-body profile-card pt-2 pb-5 d-flex flex-column align-items-center">
+
+                  <h5 class="card-title">Verify Profile</h5>
+                  <form method="post">
+                     {% csrf_token %}
+                     <div class="row">
+                        <div class="col-md-8 mb-2">
+                           <select id="verified_flag" name="verified_flag" required class="form-select">
+                              
+                           {% if data.profile_updated_flag == True %}
+                              {% if data.verified_flag == True %}
+                              <option value="True" selected>Verified</option>
+                              {% else %}
+                              <option value="True">Verified</option>
+                              {% endif %}
+                           {% endif %}
+
+                              {% if data.verified_flag == False %}
+                              <option value="False" selected>Pending</option>
+                              {% else %}
+                              <option value="False">Pending</option>
+                              {% endif %}
+                           </select>
+                        </div>
+                        <div class="col-md-4 mb-1 text-end">
+                           <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                        </div>
+                     </div>
+                  </form>
+
+
+               </div>
+            </div>
+         </div>
+
+         <div class="col-xl-8">
+
+            <div class="card">
+               <div class="card-body pt-3">
+                  <!-- Bordered Tabs -->
+                  <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview"
+                           aria-selected="true" role="tab">Overview</button>
+                     </li>
+
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
+                           aria-selected="false" tabindex="-1" role="tab">Documents</button>
+                     </li>
+
+                  </ul>
+                  <div class="tab-content pt-2">
+
+                     <div class="tab-pane fade show active profile-overview" id="profile-overview" role="tabpanel"
+                        style="margin-left: 12px;">
+
+                        <h5 class="card-title">Basic Details</h5>
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.full_name %}
+                              {{ data.full_name }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Username</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.username %}
+                              {{ data.username }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Age</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.age %}
+                              {{ data.age }}
+                              {% endif %}</div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Date of Birth</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.dob %}
+                              {{ data.dob }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Gender</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.gender == 'M' %}
+                              Male
+                              {% elif data.gender == 'F' %}
+                              Female
+                              {% elif data.gender == 'O' %}
+                              Other
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Aadhar Number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.aadhar_no %}
+                              {{ data.aadhar_no }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Email Id</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.email %}
+                              {{ data.email }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Mobile Number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.mobile_no %}
+                              {{ data.mobile_no }}
+                              {% endif %}
+                           </div>
+                        </div>
+
+                        <h5 class="card-title">Personal Details</h5>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Father</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.father %}
+                              {{ data.father }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Mother</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.mother %}
+                              {{ data.mother }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Matirial status</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.marital_status == 'S' %}
+                              Single
+                              {% elif data.marital_status == 'M' %}
+                              Married
+                              {% endif %}
+
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Children</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.children_no %}
+                              {{ data.children_no }}
+                              {% endif %}
+
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Employment Status</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.employment_status == 'Emp' %}
+                              Employed
+                              {% elif data.employment_status == 'Unemp' %}
+                              Unemployed
+                              {% elif data.employment_status == 'Self-emp' %}
+                              Self-employed
+                              {% elif data.employment_status == 'Stud' %}
+                              Student
+                              {% elif data.employment_status == 'Ret' %}
+                              Retired
+                              {% endif %}
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Occupation</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.occupation == 'Government_Employee' %}
+                              Government Employee
+                              {% elif data.occupation == 'Accountant' %}
+                              Accountant
+                              {% elif data.occupation == 'Actor/Actress' %}
+                              Actor/Actress
+                              {% elif data.occupation == 'Architect' %}
+                              Architect
+                              {% elif data.occupation == 'Artist' %}
+                              Artist
+                              {% elif data.occupation == 'Baker' %}
+                              Baker
+                              {% elif data.occupation == 'Banker' %}
+                              Banker
+                              {% elif data.occupation == 'Barista' %}
+                              Barista
+                              {% elif data.occupation == 'Bartender' %}
+                              Bartender
+                              {% elif data.occupation == 'Biologist' %}
+                              Biologist
+                              {% elif data.occupation == 'Carpenter' %}
+                              Carpenter
+                              {% elif data.occupation == 'Chef' %}
+                              Chef
+                              {% elif data.occupation == 'Cleaner' %}
+                              Cleaner
+                              {% elif data.occupation == 'Computer_Programmer' %}
+                              Computer Programmer
+                              {% elif data.occupation == 'Dentist' %}
+                              Dentist
+                              {% elif data.occupation == 'Doctor' %}
+                              Doctor
+                              {% elif data.occupation == 'Electrician' %}
+                              Electrician
+                              {% elif data.occupation == 'Engineer' %}
+                              Engineer
+                              {% elif data.occupation == 'Farmer' %}
+                              Farmer
+                              {% elif data.occupation == 'Firefighter' %}
+                              Firefighter
+                              {% elif data.occupation == 'Fisherman' %}
+                              Fisherman
+                              {% elif data.occupation == 'Flight_Attendant' %}
+                              Flight Attendant
+                              {% elif data.occupation == 'Graphic_Designer' %}
+                              Graphic Designer
+                              {% elif data.occupation == 'Hairdresser' %}
+                              Hairdresser
+                              {% elif data.occupation == 'Journalist' %}
+                              Journalist
+                              {% elif data.occupation == 'Lawyer' %}
+                              Lawyer
+                              {% elif data.occupation == 'Librarian' %}
+                              Librarian
+                              {% elif data.occupation == 'Mechanic' %}
+                              Mechanic
+                              {% elif data.occupation == 'Musician' %}
+                              Musician
+                              {% elif data.occupation == 'Nurse' %}
+                              Nurse
+                              {% elif data.occupation == 'Pharmacist' %}
+                              Pharmacist
+                              {% elif data.occupation == 'Photographer' %}
+                              Photographer
+                              {% elif data.occupation == 'Pilot' %}
+                              Pilot
+                              {% elif data.occupation == 'Plumber' %}
+                              Plumber
+                              {% elif data.occupation == 'Police_Officer' %}
+                              Police Officer
+                              {% elif data.occupation == 'Professor' %}
+                              Professor
+                              {% elif data.occupation == 'Psychologist' %}
+                              Psychologist
+                              {% elif data.occupation == 'Real_Estate_Agent' %}
+                              Real Estate Agent
+                              {% elif data.occupation == 'Receptionist' %}
+                              Receptionist
+                              {% elif data.occupation == 'Scientist' %}
+                              Scientist
+                              {% elif data.occupation == 'Software_Developer' %}
+                              Software Developer
+                              {% elif data.occupation == 'Teacher' %}
+                              Teacher
+                              {% elif data.occupation == 'Truck_Driver' %}
+                              Truck Driver
+                              {% elif data.occupation == 'Veterinarian' %}
+                              Veterinarian
+                              {% elif data.occupation == 'Waiter/Waitress' %}
+                              Waiter/Waitress
+                              {% elif data.occupation == 'Writer' %}
+                              Writer
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Monthly income</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.monthly_income %}
+                              {{ data.monthly_income }}
+                              {% endif %}
+
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Education</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.highest_education == 'Primary' %}
+                              Primary School
+                              {% elif data.highest_education == 'Secondary' %}
+                              Secondary School
+                              {% elif data.highest_education == 'High' %}
+                              High School
+                              {% elif data.highest_education == 'Dip' %}
+                              Diploma
+                              {% elif data.highest_education == 'Bachelors' %}
+                              Bachelor's Degree
+                              {% elif data.highest_education == 'Masters' %}
+                              Master's Degree
+                              {% elif data.highest_education == 'Doctorate' %}
+                              Doctorate
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Highest Education Mark (%)</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.highest_education_mark %}
+                              {{ data.highest_education_mark }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Caste</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.caste == 'SC' %}
+                              Scheduled Caste (SC)
+                              {% elif data.caste == 'ST' %}
+                              Scheduled Tribe (ST)
+                              {% elif data.caste == 'OBC' %}
+                              Other Backward Class (OBC)
+                              {% elif data.caste == 'General' %}
+                              General
+                              {% elif data.caste == 'Prefer_not_to_say' %}
+                              Prefer not to say
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Religion</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.religion == 'Hin' %}
+                              Hinduism
+                              {% elif data.religion == 'Isl' %}
+                              Islam
+                              {% elif data.religion == 'Chr' %}
+                              Christianity
+                              {% elif data.religion == 'Sik' %}
+                              Sikhism
+                              {% elif data.religion == 'Bud' %}
+                              Buddhism
+                              {% elif data.religion == 'Jai' %}
+                              Jainism
+                              {% endif %}
+                           </div>
+                        </div>
+
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Disability choices</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.has_disabilities == 'Yes' %}
+                              Yes
+                              {% elif data.has_disabilities == 'No' %}
+                              No
+                              {% endif %}
+
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Disabilities_specify</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.disabilities_specify %}
+                              {{ data.disabilities_specify }}
+                              {% endif %}
+                           </div>
+                        </div>
+
+
+                        <h5 class="card-title">Bank Details</h5>
+
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Bank name</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.bank_name %}
+                              {{ data.bank_name }}
+                              {% endif %}
+                           </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">Account number</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.account_number %}
+                              {{ data.account_number }}
+                              {% endif %}
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label ">IFSC code</div>
+                           <div class="col-lg-9 col-md-8">
+                              {% if data.ifsc_code %}
+                              {{ data.ifsc_code }}
+                              {% endif %}
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- =================================================== -->
+
+
+                     <div class="tab-pane fade  pt-3" id="profile-edit" role="tabpanel">
+
+                        <!-- Documents -->
+                        <form>
+                           <div class="row mb-3">
+                              <div class="col-md-6">
+                                 {% if data.aadhar_img %}
+                                 <p class="mt-2">Aadhar Card : {{ data.aadhar_no }}</p>
+                                 <img src="{{ data.aadhar_img.url }}" alt="Profile" class="img-fluid">
+                                 {% endif %}
+                              </div>
+                              <div class="col-md-6">
+                                 {% if data.identity_img %}
+                                 <p class="mt-2">Identity Card </p>
+                                 <img src="{{ data.identity_img.url }}" alt="Profile" class="img-fluid">
+                                 {% endif %}
+                              </div>
+                           </div>
+                        </form><!-- End Profile Edit Form -->
+
+                     </div>
+
+                  </div><!-- End Bordered Tabs -->
+
+               </div>
+            </div>
+
+         </div>
+      </div>
+   </section>
+
+</main>
+
+
+{% endif %}
+{% endblock main-content %}
