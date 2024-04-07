@@ -212,3 +212,7 @@ class PostCategoryHealth(models.Model):
     
     def __str__(self):
        return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
+    
+    
+    
+    

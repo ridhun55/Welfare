@@ -30,15 +30,15 @@
                   <form method="post" enctype="multipart/form-data" class="row g-3">
                      {% csrf_token %}
                      <div class="col-md-6">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">Username*</label>
                         <input type="text" name="username" value="{{user.username}}" class="form-control" required>
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">Aadhar Number</label>
+                        <label class="form-label">Aadhar Number*</label>
                         <input type="text" name="aadhar_no" value="{{user.aadhar_no}}" class="form-control" disabled>
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">Full Name</label>
+                        <label class="form-label">Full Name*</label>
                         <input type="text" name="full_name" value="{{ user.full_name }}" required class="form-control">
                      </div>
                      <div class="col-md-6">
@@ -53,7 +53,7 @@
                         </div>
                      </div>
                      <div class="col-md-4">
-                        <label for="gender" class="form-label">Gender</label>
+                        <label for="gender" class="form-label">Gender*</label>
                         <select id="gender" name="gender" required class="form-select">
                            {% if user.gender == 'M' %}
                            <option value="M" selected>Male</option>
@@ -73,23 +73,23 @@
                         </select>
                      </div>
                      <div class="col-md-4">
-                        <label class="form-label">Age</label>
+                        <label class="form-label">Age*</label>
                         <input type="number" name="age" value="{{ user.age }}" required class="form-control">
                      </div>
                      <div class="col-md-4">
-                        <label class="form-label">Date of Birth</label>
+                        <label class="form-label">Date of Birth*</label>
                         <input type="date" name="dob" value="{{ user.dob | date:'Y-m-d' }}" required class="form-control">
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">Email</label>
+                        <label class="form-label">Email*</label>
                         <input type="email" name="email" value="{{user.email}}" required class="form-control">
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">Mobile Number</label>
+                        <label class="form-label">Mobile Number*</label>
                         <input type="text" name="mobile_no" value="{{ user.mobile_no }}" required class="form-control">
                      </div>
                      <div class="col-md-12">
-                        <label class="form-label">Address</label>
+                        <label class="form-label">Address*</label>
                         <textarea class="form-control" style="height: 100px" name="address" required>{{ user.address }}</textarea>
                      </div>
                      <div class="col-md-12">
@@ -409,7 +409,7 @@
                         <input type="number" name="highest_education_mark" value="{{user.highest_education_mark}}" required class="form-control">
                      </div>
                      <div class="col-md-6">
-                        <label for="caste" class="form-label">Caste</label>
+                        <label for="caste" class="form-label">Caste*</label>
                         <select id="caste" name="caste" required class="form-select">
                            {% if user.caste == 'SC' %}
                            <option value="SC" selected>Scheduled Caste (SC)</option>
@@ -439,7 +439,7 @@
                         </select>
                      </div>
                      <div class="col-md-6">
-                        <label for="religion" class="form-label">Religion</label>
+                        <label for="religion" class="form-label">Religion*</label>
                         <select id="religion" name="religion" required class="form-select">
                            {% if user.religion == 'Hin' %}
                            <option value="Hin" selected>Hinduism</option>
@@ -474,7 +474,7 @@
                         </select>
                      </div>
                      <div class="col-md-6">
-                        <label for="has_disabilities" class="form-label">Do you have any disabilities?</label>
+                        <label for="has_disabilities" class="form-label">Do you have any disabilities?*</label>
                         <select id="has_disabilities" name="has_disabilities" required class="form-select">
                            {% if user.has_disabilities == 'Yes' %}
                            <option value="Yes" selected>Yes</option>
@@ -497,15 +497,15 @@
                         <h5 class="card-title">Bank Details</h5>
                      </div>
                      <div class="col-md-12">
-                        <label class="form-label">Account Number</label>
+                        <label class="form-label">Account Number*</label>
                         <input type="number" name="account_number" value="{{user.account_number}}" required class="form-control">
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">Bank Name</label>
+                        <label class="form-label">Bank Name*</label>
                         <input type="text" name="bank_name" value="{{user.bank_name}}" required class="form-control">
                      </div>
                      <div class="col-md-6">
-                        <label class="form-label">IFSC Code</label>
+                        <label class="form-label">IFSC Code*</label>
                         <input type="text" name="ifsc_code" value="{{user.ifsc_code}}" required class="form-control">
                      </div>
 

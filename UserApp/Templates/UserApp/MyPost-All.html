@@ -32,52 +32,61 @@
          <!-- Left side columns -->
          <div class="col-md-12">
             <div class="row">
-               {% for item in post %}
-               <div class="col-md-6">
-                  <div class="card">
-                     <div class="card-body" style="padding: 20px;">
-                        <div class="d-flex align-items-center">
-                           <div>
-                              {% if item.post_img %}
-                              <img class="rounded" style="width: 100px; height: auto;margin-right: 10px;"
-                                 src="{{ item.post_img.url }}" alt="">
-                              {% else %}
-                              <img class="rounded border border-1"
-                                 style="width: 100px; height: auto;margin-right: 10px;"
-                                 src="{% static '\assets\img\empty-post.jpg' %}" alt="">
-                              {% endif %}
-                           </div>
-                           <div class="">
-                              <small class="px-3">Last Date</small> <br>
-                              <small class="text-danger px-3">{{ item.post_end_date | date:"d/ m/ Y" }}</small>
-                           </div>
-                           <div class="">
-                              <small class="px-3">Category</small> <br>
-                              <small class="px-3">
-                                 {% if item.post_category == 'Education' %}Education{% endif %}
-                                 {% if item.post_category == 'Healthcare' %}Healthcare{% endif %}
-                                 {% if item.post_category == 'Employment' %}Employment{% endif %}
-                                 {% if item.post_category == 'Social_Security' %}Social Security{% endif %}
-                                 {% if item.post_category == 'Housing' %}Housing{% endif %}
-                                 {% if item.post_category == 'Rural_Development' %}Rural Development{% endif %}
-                                 {% if item.post_category == 'Women_and_Child_Welfare' %}
-                                 Women and Child Welfare
+               
+               {% if user.verified_flag %}
+                  {% for item in post %}
+                  <div class="col-md-6">
+                     <div class="card">
+                        <div class="card-body" style="padding: 20px;">
+                           <div class="d-flex align-items-center">
+                              <div>
+                                 {% if item.post_img %}
+                                 <img class="rounded" style="width: 100px; height: auto;margin-right: 10px;" src="{{ item.post_img.url }}"
+                                    alt="">
+                                 {% else %}
+                                 <img class="rounded border border-1" style="width: 100px; height: auto;margin-right: 10px;"
+                                    src="{% static '\assets\img\empty-post.jpg' %}" alt="">
                                  {% endif %}
-                                 {% if item.post_category == 'Environment' %}Environment{% endif %}
-                                 {% if item.post_category == 'Disaster_Management' %}Disaster Management{% endif %}
-                                 {% if item.post_category == 'Minority_Welfare' %}Minority Welfare{% endif %}
-                              </small>
+                              </div>
+                              <div class="">
+                                 <small class="px-3">Last Date</small> <br>
+                                 <small class="text-danger px-3">{{ item.post_end_date | date:"d/ m/ Y" }}</small>
+                              </div>
+                              <div class="">
+                                 <small class="px-3">Category</small> <br>
+                                 <small class="px-3">
+                                    {% if item.post_category == 'Education' %}Education{% endif %}
+                                    {% if item.post_category == 'Healthcare' %}Healthcare{% endif %}
+                                    {% if item.post_category == 'Employment' %}Employment{% endif %}
+                                    {% if item.post_category == 'Social_Security' %}Social Security{% endif %}
+                                    {% if item.post_category == 'Housing' %}Housing{% endif %}
+                                    {% if item.post_category == 'Rural_Development' %}Rural Development{% endif %}
+                                    {% if item.post_category == 'Women_and_Child_Welfare' %}
+                                    Women and Child Welfare
+                                    {% endif %}
+                                    {% if item.post_category == 'Environment' %}Environment{% endif %}
+                                    {% if item.post_category == 'Disaster_Management' %}Disaster Management{% endif %}
+                                    {% if item.post_category == 'Minority_Welfare' %}Minority Welfare{% endif %}
+                                 </small>
+                              </div>
                            </div>
-                        </div>
-                        <div>
-                           <h5 class="card-title pt-3 p-0">{{ item.post_title }}</h5>
-                           <p><small>{{ item.post_description | truncatewords_html:17 }}</small></p>
-                           <a href="{% url 'mypost_apply' item.id %}" class="btn btn-primary btn-sm">Apply Now</a>
+                           <div>
+                              <h5 class="card-title pt-3 p-0">{{ item.post_title }}</h5>
+                              <p><small>{{ item.post_description | truncatewords_html:17 }}</small></p>
+                              <a href="{% url 'mypost_apply' item.id %}" class="btn btn-primary btn-sm">Apply Now</a>
+                           </div>
                         </div>
                      </div>
                   </div>
-               </div>
-               {% endfor %}
+                  {% endfor %}
+                  
+               {% else %}
+               <h4 class="my-5 text-center text-danger">
+                  User Profile Not Approved. <br>
+                  <small>Please contact authorities.</small>
+               </h4>
+               
+               {% endif %}
             </div>
          </div><!-- End Left side columns -->
       </div>

@@ -280,14 +280,33 @@ def PostOutdatedView(request):
     return render(request, 'AdminApp/Post-Outdated.html', context)
 
 
-@login_required(login_url='login')
+
+   # ===================
+
+# @login_required(login_url='login')
+# def PostAllView(request):
+#     data = WelfarePost.objects.all().order_by('-id')
+#     context = {
+#         'data': data,
+#         'today_date':date.today()
+#     }
+#     return render(request, 'AdminApp/Post-All.html', context)
+
+    
+    
 def PostAllView(request):
+    today_date = date.today()
+    WelfarePost.objects.filter(post_end_date__lt=today_date).update(post_active=False)
+
     data = WelfarePost.objects.all().order_by('-id')
+
     context = {
         'data': data,
-        'today_date':date.today()
+        'today_date': today_date
     }
     return render(request, 'AdminApp/Post-All.html', context)
+    
+    # ===================
 
 
 @login_required(login_url='login')
