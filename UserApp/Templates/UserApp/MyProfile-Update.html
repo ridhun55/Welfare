@@ -395,42 +395,13 @@
                      <div class="col-md-6">
                         <label for="highest_education" class="form-label">Highest Education</label>
                         <select id="highest_education" name="highest_education" required class="form-select">
-                           {% if user.highest_education == 'Primary' %}
-                           <option value="Primary" selected>Primary School</option>
-                           {% else %}
-                           <option value="Primary">Primary School</option>
-                           {% endif %}
-                           {% if user.highest_education == 'Secondary' %}
-                           <option value="Secondary" selected>Secondary School</option>
-                           {% else %}
-                           <option value="Secondary">Secondary School</option>
-                           {% endif %}
-                           {% if user.highest_education == 'High' %}
-                           <option value="High" selected>High School</option>
-                           {% else %}
-                           <option value="High">High School</option>
-                           {% endif %}
-                           {% if user.highest_education == 'Dip' %}
-                           <option value="Dip" selected>Diploma</option>
-                           {% else %}
-                           <option value="Dip">Diploma</option>
-                           {% endif %}
-                           {% if user.highest_education == 'Bachelors' %}
-                           <option value="Bachelor's" selected>Bachelor's Degree</option>
-                           {% else %}
-                           <option value="Bachelor's">Bachelor's Degree</option>
-                           {% endif %}
-                           {% if user.highest_education == 'Masters' %}
-                           <option value="Master's" selected>Master's Degree</option>
-                           {% else %}
-                           <option value="Master's">Master's Degree</option>
-                           {% endif %}
-                           {% if user.highest_education == 'Doctorate' %}
-                           <option value="Doctorate" selected>Doctorate</option>
-                           {% else %}
-                           <option value="Doctorate">Doctorate</option>
-                           {% endif %}
-                           
+                           <option value="Primary" {% if 'Primary' in user.highest_education %}selected{% endif %}>Primary School</option>
+                           <option value="Secondary" {% if 'Secondary' in user.highest_education %}selected{% endif %}>Secondary School</option>
+                           <option value="High" {% if 'High' in user.highest_education %}selected{% endif %}>High School</option>
+                           <option value="Diploma" {% if 'Dip' in user.highest_education %}selected{% endif %}>Diploma</option>
+                           <option value="Bachelor's" {% if "Bachelor's" in user.highest_education %}selected{% endif %}>Bachelor's Degree</option>
+                           <option value="Master's" {% if "Master's" in user.highest_education %}selected{% endif %}>Master's Degree</option>
+                           <option value="Doctorate" {% if 'Doctorate' in user.highest_education %}selected{% endif %}>Doctorate</option>
                         </select>
                      </div>
                      <div class="col-md-6">

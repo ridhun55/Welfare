@@ -199,99 +199,100 @@
                         <div class="row">
                            <div class="col-lg-3 col-md-4 label ">Occupation</div>
                            <div class="col-lg-9 col-md-8">
-                              {% if data.occupation == 'Government_Employee' %}
+                              {% if 'Government_Employee' in data.occupation %}
                               Government Employee
-                              {% elif data.occupation == 'Accountant' %}
+                              {% elif 'Accountant' in data.occupation %}
                               Accountant
-                              {% elif data.occupation == 'Actor/Actress' %}
+                              {% elif 'Actor/Actress' in data.occupation %}
                               Actor/Actress
-                              {% elif data.occupation == 'Architect' %}
+                              {% elif 'Architect' in data.occupation %}
                               Architect
-                              {% elif data.occupation == 'Artist' %}
+                              {% elif 'Artist' in data.occupation %}
                               Artist
-                              {% elif data.occupation == 'Baker' %}
+                              {% elif 'Baker' in data.occupation %}
                               Baker
-                              {% elif data.occupation == 'Banker' %}
+                              {% elif 'Banker' in data.occupation %}
                               Banker
-                              {% elif data.occupation == 'Barista' %}
+                              {% elif 'Barista' in data.occupation %}
                               Barista
-                              {% elif data.occupation == 'Bartender' %}
+                              {% elif 'Bartender' in data.occupation %}
                               Bartender
-                              {% elif data.occupation == 'Biologist' %}
+                              {% elif 'Biologist' in data.occupation %}
                               Biologist
-                              {% elif data.occupation == 'Carpenter' %}
+                              {% elif 'Carpenter' in data.occupation %}
                               Carpenter
-                              {% elif data.occupation == 'Chef' %}
+                              {% elif 'Chef' in data.occupation %}
                               Chef
-                              {% elif data.occupation == 'Cleaner' %}
+                              {% elif 'Cleaner' in data.occupation %}
                               Cleaner
-                              {% elif data.occupation == 'Computer_Programmer' %}
+                              {% elif 'Computer_Programmer' in data.occupation %}
                               Computer Programmer
-                              {% elif data.occupation == 'Dentist' %}
+                              {% elif 'Dentist' in data.occupation %}
                               Dentist
-                              {% elif data.occupation == 'Doctor' %}
+                              {% elif 'Doctor' in data.occupation %}
                               Doctor
-                              {% elif data.occupation == 'Electrician' %}
+                              {% elif 'Electrician' in data.occupation %}
                               Electrician
-                              {% elif data.occupation == 'Engineer' %}
+                              {% elif 'Engineer' in data.occupation %}
                               Engineer
-                              {% elif data.occupation == 'Farmer' %}
+                              {% elif 'Farmer' in data.occupation %}
                               Farmer
-                              {% elif data.occupation == 'Firefighter' %}
+                              {% elif 'Firefighter' in data.occupation %}
                               Firefighter
-                              {% elif data.occupation == 'Fisherman' %}
+                              {% elif 'Fisherman' in data.occupation %}
                               Fisherman
-                              {% elif data.occupation == 'Flight_Attendant' %}
+                              {% elif 'Flight_Attendant' in data.occupation %}
                               Flight Attendant
-                              {% elif data.occupation == 'Graphic_Designer' %}
+                              {% elif 'Graphic_Designer' in data.occupation %}
                               Graphic Designer
-                              {% elif data.occupation == 'Hairdresser' %}
+                              {% elif 'Hairdresser' in data.occupation %}
                               Hairdresser
-                              {% elif data.occupation == 'Journalist' %}
+                              {% elif 'Journalist' in data.occupation %}
                               Journalist
-                              {% elif data.occupation == 'Lawyer' %}
+                              {% elif 'Lawyer' in data.occupation %}
                               Lawyer
-                              {% elif data.occupation == 'Librarian' %}
+                              {% elif 'Librarian' in data.occupation %}
                               Librarian
-                              {% elif data.occupation == 'Mechanic' %}
+                              {% elif 'Mechanic' in data.occupation %}
                               Mechanic
-                              {% elif data.occupation == 'Musician' %}
+                              {% elif 'Musician' in data.occupation %}
                               Musician
-                              {% elif data.occupation == 'Nurse' %}
+                              {% elif 'Nurse' in data.occupation %}
                               Nurse
-                              {% elif data.occupation == 'Pharmacist' %}
+                              {% elif 'Pharmacist' in data.occupation %}
                               Pharmacist
-                              {% elif data.occupation == 'Photographer' %}
+                              {% elif 'Photographer' in data.occupation %}
                               Photographer
-                              {% elif data.occupation == 'Pilot' %}
+                              {% elif 'Pilot' in data.occupation %}
                               Pilot
-                              {% elif data.occupation == 'Plumber' %}
+                              {% elif 'Plumber' in data.occupation %}
                               Plumber
-                              {% elif data.occupation == 'Police_Officer' %}
+                              {% elif 'Police_Officer' in data.occupation %}
                               Police Officer
-                              {% elif data.occupation == 'Professor' %}
+                              {% elif 'Professor' in data.occupation %}
                               Professor
-                              {% elif data.occupation == 'Psychologist' %}
+                              {% elif 'Psychologist' in data.occupation %}
                               Psychologist
-                              {% elif data.occupation == 'Real_Estate_Agent' %}
+                              {% elif 'Real_Estate_Agent' in data.occupation %}
                               Real Estate Agent
-                              {% elif data.occupation == 'Receptionist' %}
+                              {% elif 'Receptionist' in data.occupation %}
                               Receptionist
-                              {% elif data.occupation == 'Scientist' %}
+                              {% elif 'Scientist' in data.occupation %}
                               Scientist
-                              {% elif data.occupation == 'Software_Developer' %}
+                              {% elif 'Software_Developer' in data.occupation %}
                               Software Developer
-                              {% elif data.occupation == 'Teacher' %}
+                              {% elif 'Teacher' in data.occupation %}
                               Teacher
-                              {% elif data.occupation == 'Truck_Driver' %}
+                              {% elif 'Truck_Driver' in data.occupation %}
                               Truck Driver
-                              {% elif data.occupation == 'Veterinarian' %}
+                              {% elif 'Veterinarian' in data.occupation %}
                               Veterinarian
-                              {% elif data.occupation == 'Waiter/Waitress' %}
+                              {% elif 'Waiter/Waitress' in data.occupation %}
                               Waiter/Waitress
-                              {% elif data.occupation == 'Writer' %}
+                              {% elif 'Writer' in data.occupation %}
                               Writer
                               {% endif %}
+
                            </div>
                         </div>
                         <div class="row">
@@ -308,23 +309,24 @@
                         <div class="row">
                            <div class="col-lg-3 col-md-4 label ">Education</div>
                            <div class="col-lg-9 col-md-8">
-                              {% if data.highest_education == 'Primary' %}
+                              {% if 'Primary' in data.highest_education %}
                               Primary School
-                              {% elif data.highest_education == 'Secondary' %}
+                              {% elif 'Secondary' in data.highest_education %}
                               Secondary School
-                              {% elif data.highest_education == 'High' %}
+                              {% elif 'High School' in data.highest_education %}
                               High School
-                              {% elif data.highest_education == 'Dip' %}
+                              {% elif 'Diploma' in data.highest_education %}
                               Diploma
-                              {% elif data.highest_education == 'Bachelors' %}
+                              {% elif 'Bachelor' in data.highest_education %}
                               Bachelor's Degree
-                              {% elif data.highest_education == 'Masters' %}
+                              {% elif 'Master' in data.highest_education %}
                               Master's Degree
-                              {% elif data.highest_education == 'Doctorate' %}
+                              {% elif 'Doctorate' in data.highest_education %}
                               Doctorate
                               {% endif %}
                            </div>
                         </div>
+
                         <div class="row">
                            <div class="col-lg-3 col-md-4 label ">Highest Education Mark (%)</div>
                            <div class="col-lg-9 col-md-8">
