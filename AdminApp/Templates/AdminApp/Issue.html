@@ -1,0 +1,131 @@
+
+
+
+
+
+<!-- =================== -->
+
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Issues</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">Issues</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+
+               <!-- Table 1 -->
+               <div class="col-12">
+                  <div class="card">
+                     
+                     
+                     <div class="card-body">
+                        {% if messages %}
+                        {% for message in messages %}
+                        
+                        <div id="message" class="mt-3 alert alert-{{ message.tags }} alert-danger  fade show" role="alert">
+                           <span class="small">{{ message }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <script>
+                           setTimeout(function () {
+                              var message = document.getElementById('message');
+                              if (message) {
+                                 message.style.display = 'none';
+                              }
+                           }, 1500);
+                        </script>
+
+                        <h5 class="card-title">Issues</h5>
+                        <!-- Bordered Table -->
+                        {% if data %}
+                        <table class="table table-bordered">
+                           <thead>
+                              <tr>
+                                 <th scope="col">Id</th>
+                                 <th scope="col">Name</th>
+                                 <th scope="col">Email</th>
+                                 <th scope="col">Date</th>
+                                 <th scope="col">Issue</th>
+                                 <th scope="col">More</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for i in data %}
+                              {% if not i.is_superuser %}
+                              <tr>
+                                 <th scope="row">{{ i.id }}</th>
+                                 <td>
+                                    <a href="{% url 'issue_read' i.id %}">{{ i.name }}</a>
+                                 </td>
+                                 <td>{{ i.email }}</td>
+                                 <td>{{ i.submit_date | date:"d/m/Y" }}</td>
+                                 <td>{{ i.issue_message | truncatewords_html:16 }}</td>
+
+                                 <td>
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                          class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-arrow">
+                                       <li><a class="dropdown-item" href="{% url 'issue_read' i.id %}">View
+                                             Details</a></li>
+
+                                       <li><a class="dropdown-item"
+                                             href="{% url 'issue_delete' i.id%}">Delete</a></li>
+                                    </ul>
+                                 </td>
+                              </tr>
+                              {% endif %}
+                              {% endfor %}
+
+                           </tbody>
+                        </table>
+
+                        {% else %}
+                        <p class="text-center">No Data</p>
+                        {% endif %}
+                        <!-- End Bordered Table -->
+
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+
+            </div>
+         </div><!-- End Left side columns -->
+
+      </div>
+   </section>
+
+
+
+
+
+
+
+
+</main><!-- End #main -->
+
+
+{% endif %}
+{% endblock main-content %}

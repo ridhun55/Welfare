@@ -24,5 +24,9 @@ urlpatterns = [
    path('post_verify_pending/', views.PostVerifyPendingView, name='post_verify_pending'),
    path('post_verify_approved/', views.PostVerifyApprovedView, name='post_verify_approved'),
    path('post_verify_view/<int:item_id>/<int:user_id>', views.PostVerifyViewView, name='post_verify_view'),
+   
+   path('issue', views.IssueView, name='issue'),
+   path('issue_read/<int:id>', views.IssueReadView, name='issue_read'),
+   path('issue_delete/<int:pk>', views.IssueDeleteView, name='issue_delete'),
 
 ]

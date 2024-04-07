@@ -216,3 +216,19 @@ class PostCategoryHealth(models.Model):
     
     
     
+
+
+
+
+
+# Report An Issue
+
+class ReportAnIssue(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True,)
+    email = models.EmailField(blank=True, null=True,)
+    issue_message = models.TextField(blank=True, null=True,)
+    submit_date = models.DateTimeField(auto_now_add=True)
+    issue_flag = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

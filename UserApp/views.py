@@ -444,7 +444,24 @@ def MyPostApplyView(request, post_id):
 
 
 
-# Others
 
+# Report An Issue
 
+from AdminApp.models import ReportAnIssue
 
+def ReportIssueView(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        issue_message = request.POST.get('issue_message')
+
+        ReportAnIssue.objects.create(
+           name=name, 
+           email=email, 
+           issue_message=issue_message, 
+           issue_flag=True
+           )
+
+        return redirect('login')
+
+    return render(request, 'UserApp/Report-Issue.html')

@@ -447,3 +447,34 @@ def PostVerifyViewView(request, item_id, user_id):
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-View.html', context)
+
+
+
+
+# IssueView
+from AdminApp.models import ReportAnIssue
+
+@login_required(login_url='login')
+def IssueView(request):
+    data = ReportAnIssue.objects.all()
+    context = {
+        'data':data
+    }
+    return render(request, 'AdminApp/Issue.html', context)
+
+
+@login_required(login_url='login')
+def IssueReadView(request,id):
+    data = ReportAnIssue.objects.get(id=id)
+    context = {
+        'data':data
+    }
+    return render(request, 'AdminApp/Issue-Read.html', context)
+
+
+@login_required(login_url='login')
+def IssueDeleteView(request, pk):
+    obj = get_object_or_404(ReportAnIssue, pk=pk)
+    obj.delete()
+    messages.success(request, f"Issue ID {pk} has been deleted.")
+    return redirect('issue') 
