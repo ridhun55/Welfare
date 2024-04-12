@@ -18,31 +18,34 @@
       </nav>
    </div>
    <style>
-      .card-refresh{
+      .card-refresh {
          position: relative;
       }
-      .btn-refresh{
-             background: #aab0bb;
-    padding: 7px 12px;
-    cursor: pointer;
-    text-decoration: none ;
-    color: white;
-    border-radius: 50px;
-    font-size: 13px;
-    position: absolute;
-    top: 16px;
-    right: 23px;
+
+      .btn-refresh {
+         background: #aab0bb;
+         padding: 7px 12px;
+         cursor: pointer;
+         text-decoration: none;
+         color: white;
+         border-radius: 50px;
+         font-size: 13px;
+         position: absolute;
+         top: 16px;
+         right: 23px;
       }
-      .btn-refresh:hover{
-         text-decoration: none ;
+
+      .btn-refresh:hover {
+         text-decoration: none;
          background: #1f3c74;
          color: white;
       }
+
       .table-user-btn {
          display: inline-flex;
          flex-wrap: wrap;
       }
-   
+
       .table-user-btn span {
          border: 1px solid #dadada;
          border-radius: 45px;
@@ -82,7 +85,7 @@
                            }, 1500);
                         </script>
                         <!-- Bordered Table -->
-                        {% if data_education or data_health %}
+                        {% if data_education or data_health or data_employment %}
                         <table class="table table-bordered">
                            <thead>
                               <tr>
@@ -93,7 +96,7 @@
                                  <th scope="col">Applicants</th>
                               </tr>
                            </thead>
-                           
+
                            <tbody>
                               <!-- Education -->
                               {% for item in data_education %}
@@ -102,7 +105,8 @@
                                  <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
                                  <td>
                                     <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
-                                    &nbsp;<span class="badge bg-primary rounded-circle text-sm-center">{{ item.postcategoryeducation_set.count }}</span>
+                                    &nbsp;<span class="badge bg-primary rounded-circle text-sm-center">
+                                       {{item.postcategoryeducation_set.count }}</span>
                                  </td>
                                  <td>{{ item.post_category }}</td>
                                  <td>
@@ -113,7 +117,8 @@
                                           <span class="badge bg-primary">New</span>
                                           {% endif %}
                                           <a href="{% url 'post_verify_view' item.id application.user.id %}"
-                                             class="{% if not application.is_approved %}text-danger{% endif %}"> {{ application.user.full_name }}</a></span>
+                                             class="{% if not application.is_approved %}text-danger{% endif %}"> 
+                                             {{application.user.full_name}}</a></span>
                                        {% endfor %}
                                     </div>
                                  </td>
@@ -127,7 +132,8 @@
                                  <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
                                  <td>
                                     <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
-                                    &nbsp;<span class="badge bg-primary rounded-circle text-sm-center">{{ item.postcategoryhealth_set.count }}</span>
+                                    &nbsp;<span class="badge bg-primary rounded-circle text-sm-center">
+                                       {{item.postcategoryhealth_set.count }}</span>
                                  </td>
                                  <td>{{ item.post_category }} </td>
                                  <td>
@@ -138,7 +144,7 @@
                                           <span class="badge bg-primary">New</span>
                                           {% endif %}
                                           <a href="{% url 'post_verify_view' item.id application.user.id %}"
-                                             class="{% if not application.is_approved %}text-danger{% endif %}"> 
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
                                              {{ application.user.full_name }}</a></span>
                                        {% endfor %}
                                     </div>
@@ -146,10 +152,38 @@
                               </tr>
                               {% endfor %}
                               <!-- End Healthcare -->
+                              <!-- Employment -->
+                              {% for item in data_employment %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td>
+                                    <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
+                                    &nbsp;<span class="badge bg-primary rounded-circle text-sm-center">{{item.postcategoryemployment_set.count}}</span>
+                                 </td>
+                                 <td>{{ item.post_category }}</td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryemployment_set.all %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
+                                             {{ application.user.full_name }}</a></span>
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+
+                              <!-- End Employment -->
                            </tbody>
                         </table>
                         {% endif %}
                         <!-- End Bordered Table -->
+
                      </div>
                   </div>
                </div>

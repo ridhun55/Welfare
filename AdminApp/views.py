@@ -330,13 +330,20 @@ def PostVerifyAllView(request):
     ).distinct()
     
     data_health = WelfarePost.objects.filter(
-        postcategoryhealth__is_approved=True,
+        postcategoryhealth__is_applied=True,
         postcategoryhealth__is_pending=True
     ).distinct()
+    
+    data_employment = WelfarePost.objects.filter(
+        postcategoryemployment__is_applied=True,
+        postcategoryemployment__is_pending=True
+    ).distinct()
+    
     
     context = {
         'data_education': data_education,
         'data_health': data_health,
+        'data_employment': data_employment,
     }
     return render(request, 'AdminApp/PostVerify-All.html', context)
 
@@ -352,15 +359,23 @@ def PostVerifyPendingView(request):
     data_health = WelfarePost.objects.filter(
         postcategoryhealth__is_applied=True,
         postcategoryhealth__is_pending=True,
-        postcategoryhealth__is_approved=True
+        postcategoryhealth__is_approved=False  # Change to False
     ).distinct()
     
-    combined_posts = chain(data_education, data_health)
-
+    data_employment = WelfarePost.objects.filter(
+        postcategoryemployment__is_applied=True,
+        postcategoryemployment__is_pending=True,
+        postcategoryemployment__is_approved=False
+    ).distinct()
+    
+    print(data_employment)
+    
+    combined_posts = chain(data_education, data_health, data_employment)
 
     context = {
         'data_education': data_education,
         'data_health': data_health,
+        'data_employment': data_employment,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-Pending.html', context)
@@ -380,12 +395,19 @@ def PostVerifyApprovedView(request):
         postcategoryhealth__is_approved=True
     ).distinct()
     
-    combined_posts = chain(data_education, data_health)
+    data_employment = WelfarePost.objects.filter(
+        postcategoryemployment__is_applied=True,
+        postcategoryemployment__is_pending=True,
+        postcategoryemployment__is_approved=True
+    ).distinct()
+    
+    combined_posts = chain(data_education, data_health, data_employment)
 
 
     context = {
         'data_education': data_education,
         'data_health': data_health,
+        'data_employment': data_employment,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-Approved.html', context)
@@ -394,7 +416,7 @@ def PostVerifyApprovedView(request):
 from itertools import chain
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from . models import PostCategoryEducation, PostCategoryHealth
+from . models import PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment
 
 @login_required(login_url='login')
 def PostVerifyViewView(request, item_id, user_id):
@@ -406,7 +428,11 @@ def PostVerifyViewView(request, item_id, user_id):
         user_id=user_id,
         post_id=item_id,
     )
-    
+    data_employment = PostCategoryEmployment.objects.filter(
+        user_id=user_id,
+        post_id=item_id,
+    )
+
     # Update new_flag for PostCategoryEducation objects
     for post_education in data_education:
         if post_education.new_flag:
@@ -418,32 +444,38 @@ def PostVerifyViewView(request, item_id, user_id):
         if post_health.new_flag:
             post_health.new_flag = False
             post_health.save()
-    
-    combined_posts = chain(data_education, data_health)
-    
-    # Education Status Update form 
-    if request.method == 'POST':
-        for post_education in data_education:
-            if str(post_education.post.post_category) == 'Education':
-                is_approved = request.POST.get('is_approved') 
-                post_education.is_approved = is_approved == 'True'
-                post_education.save()
 
-        return redirect('post_verify_pending') 
-    
-    # Healthcare Status Update form 
-    if request.method == 'POST':
-        for post_health in data_health:
-            if str(post_health.post.post_category) == 'Healthcare':
-                is_approved = request.POST.get('is_approved') 
-                post_health.is_approved = is_approved == 'True'
-                post_health.save()
+    # Update new_flag for PostCategoryEmployment objects
+    for post_employment in data_employment:
+        if post_employment.new_flag:
+            post_employment.new_flag = False
+            post_employment.save()
 
-        return redirect('post_verify_pending') 
+    combined_posts = chain(data_education, data_health, data_employment)
+
+    # Form submission for updating approval status
+    if request.method == 'POST':
+        for post in combined_posts:
+            if post.post.post_category == 'Education':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
+            elif post.post.post_category == 'Healthcare':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
+            elif post.post.post_category == 'Employment':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
+
+        # Redirect to a different view or URL after processing the form data
+        return redirect('post_verify_all')
 
     context = {
         'data_education': data_education,
         'data_health': data_health,
+        'data_employment': data_employment,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-View.html', context)

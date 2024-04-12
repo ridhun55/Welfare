@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, time
 from UserApp .models import CustomUser
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
-from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth
+from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryHousing, PostCategoryWomanAndChild
 
 
 
@@ -426,6 +426,36 @@ def MyPostApplyView(request, post_id):
             hearing_condition=hearing_condition,
             health_insurance=health_insurance,
             govt_health_card=govt_health_card,
+            is_applied=True,
+            is_approved=False,
+            is_pending=True,
+            is_rejected=False,
+            new_flag=True,
+            submit_date=datetime.today().date()
+        )
+        obj.save()
+        return redirect('mypost_all')
+     
+    elif request.method == 'POST' and post_category == 'Employment':
+        company_name = request.POST.get('company_name')
+        job_entry_date = request.POST.get('job_entry_date')
+        retirement_date = request.POST.get('retirement_date')
+        job_post = request.POST.get('job_post')
+        salary_per_month = request.POST.get('salary_per_month')
+        
+        existing_application = PostCategoryEmployment.objects.filter(user=request.user, post=obj1).exists()
+        if existing_application:
+            messages.error(request, 'You have already applied for this post.')
+            return redirect('mypost_apply', post_id=post_id)
+
+        obj = PostCategoryEmployment(
+            user=request.user,
+            post=obj1,
+            company_name=company_name,
+            job_entry_date=job_entry_date,
+            retirement_date=retirement_date,
+            job_post=job_post,
+            salary_per_month=salary_per_month,
             is_applied=True,
             is_approved=False,
             is_pending=True,

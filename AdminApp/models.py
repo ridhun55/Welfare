@@ -214,9 +214,70 @@ class PostCategoryHealth(models.Model):
        return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
     
     
+class PostCategoryEmployment(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
+    
+    company_name = models.CharField(max_length=255, blank=True, null=True, default=None)
+    job_entry_date = models.DateField(blank=True, null=True, default=None)
+    retirement_date = models.DateField(blank=True, null=True, default=None)
+    job_post = models.CharField(max_length=255, blank=True, null=True, default=None)
+    salary_per_month = models.CharField(max_length=255, blank=True, null=True, default=None)
+    
+    is_applied = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+    new_flag = models.BooleanField(default=True)
+    submit_date = models.DateField(blank=True, null=True, default=None)
+    
+    def __str__(self):
+       return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
+    
+    
+class PostCategoryHousing(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
+    
+    ration_card_no = models.CharField(max_length=255, blank=True, null=True, default=None)
+    land_area = models.CharField(max_length=255, blank=True, null=True, default=None)
+    survey_no = models.CharField(max_length=255, blank=True, null=True, default=None)
+    no_of_members = models.IntegerField(blank=True, null=True, default=0)
+    location = models.CharField(max_length=255, blank=True, null=True, default=None)
+    
+    is_applied = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+    new_flag = models.BooleanField(default=True)
+    submit_date = models.DateField(blank=True, null=True, default=None)
+
+    def __str__(self):
+       return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
     
     
 
+class PostCategoryWomanAndChild(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
+    
+    health_center_nearby = models.CharField(max_length=255, blank=True, null=True, default=None)   
+    school_nearby = models.CharField(max_length=255, blank=True, null=True, default=None)   
+    ration_card_no = models.CharField(max_length=255, blank=True, null=True, default=None)
+    # How would you rate your overall health? (Poor/Fair/Good/Excellent)
+    overall_health = models.CharField(max_length=255, blank=True, null=True, default=None) 
+    # How would you describe your current financial situation? (Poor/Fair/Good/Excellent)
+    financial_status = models.CharField(max_length=255, blank=True, null=True, default=None) 
+    
+    is_applied = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+    new_flag = models.BooleanField(default=True)
+    submit_date = models.DateField(blank=True, null=True, default=None)
+
+    def __str__(self):
+       return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
 
 
 

@@ -672,7 +672,31 @@
 
 
                      {% elif data.post_category == 'Employment' %}
-                     Employment
+                     <div class="col-md-4">
+                        <label class="form-label">company name*</label>
+                        <input type="text" required name="company_name"
+                           value="{% if data.company_name %}{{data.company_name}}{% endif %}" class="form-control">
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">job entry date*</label>
+                        <input type="date" required name="job_entry_date"
+                           value="{% if data.job_entry_date %}{{data.job_entry_date}}{% endif %}" class="form-control">
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">retirement date*</label>
+                        <input type="date" required name="retirement_date"
+                           value="{% if data.retirement_date %}{{data.retirement_date}}{% endif %}" class="form-control">
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">job post*</label>
+                        <input type="text" required name="job_post"
+                           value="{% if data.job_post %}{{data.job_post}}{% endif %}" class="form-control">
+                     </div>
+                     <div class="col-md-4">
+                        <label class="form-label">salary per month*</label>
+                        <input type="text" required name="salary_per_month"
+                           value="{% if data.salary_per_month %}{{data.salary_per_month}}{% endif %}" class="form-control">
+                     </div>
                      {% elif data.post_category == 'Social_Security' %}
                      Social_Security
                      {% elif data.post_category == 'Housing' %}

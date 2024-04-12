@@ -70,7 +70,7 @@
                            }, 1500);
                         </script>
                         <!-- Bordered Table -->
-                        {% if data_education or data_health %}
+                        {% if data_education or data_health or data_employment %}
                         <table class="table table-bordered">
                            <thead>
                               <tr>
@@ -140,6 +140,33 @@
                               </tr>
                               {% endfor %}
                               <!-- End Healthcare -->
+                              <!-- Employment -->
+                              {% for item in data_employment %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td>
+                                    <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
+                                    &nbsp;<span
+                                       class="badge bg-primary rounded-circle text-sm-center">{{item.postcategoryemployment_set.count}}</span>
+                                 </td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryemployment_set.all %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
+                                             {{ application.user.full_name }}</a></span>
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                              
+                              <!-- End Employment -->
                            </tbody>
                         </table>
                         {% endif %}
