@@ -20,5 +20,7 @@ urlpatterns = [
    path('mypost_this_month/', views.MyPostThisMonthView, name='mypost_this_month'),
    
    path('error/', views.error_page, name='error_page'),
+   
    path('report_issue/', views.ReportIssueView, name='report_issue'),
+   path('ask_query/', views.AskQueryView, name='ask_query'),
 ]

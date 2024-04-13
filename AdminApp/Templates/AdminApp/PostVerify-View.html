@@ -572,6 +572,118 @@
                         {% endfor %}
                         <!-- End Employment -->
 
+                        <!-- housing -->
+                        {% for post in data_housing %}
+                        {% if post.post.post_category == 'Housing' %}
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">x</div>
+                           <div class="col-lg-9 col-md-8">x</div>
+                        </div>
+                        <h5 class="card-title">Application Status</h5>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <form method="post" id="housing">
+                                 {% csrf_token %}
+                                 <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                       <select id="is_approved" name="is_approved" required class="form-select">
+                                          {% if post.is_approved == True %}
+                                          <option value="True" selected>Approved</option>
+                                          {% else %}
+                                          <option value="True">Approved</option>
+                                          {% endif %}
+                                          {% if post.is_approved == False %}
+                                          <option value="False" selected>Pending</option>
+                                          {% else %}
+                                          <option value="False">Pending</option>
+                                          {% endif %}
+                                       </select>
+                                    </div>
+                                    <div class="col-md-4 mb-1 text-end">
+                                       <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- End housing -->
+                        <!-- Rural_Development -->
+                        {% for post in data_rural_development %}
+                        {% if post.post.post_category == 'Rural_Development' %}
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">x</div>
+                           <div class="col-lg-9 col-md-8">x</div>
+                        </div>
+                        <h5 class="card-title">Application Status</h5>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <form method="post" id="housing">
+                                 {% csrf_token %}
+                                 <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                       <select id="is_approved" name="is_approved" required class="form-select">
+                                          {% if post.is_approved == True %}
+                                          <option value="True" selected>Approved</option>
+                                          {% else %}
+                                          <option value="True">Approved</option>
+                                          {% endif %}
+                                          {% if post.is_approved == False %}
+                                          <option value="False" selected>Pending</option>
+                                          {% else %}
+                                          <option value="False">Pending</option>
+                                          {% endif %}
+                                       </select>
+                                    </div>
+                                    <div class="col-md-4 mb-1 text-end">
+                                       <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- End Rural_Development -->
+                        <!-- data_minority_welfare -->
+                        {% for post in data_minority_welfare %}
+                        {% if post.post.post_category == 'Minority_Welfare' %}
+                        <div class="row">
+                           <div class="col-lg-3 col-md-4 label">x</div>
+                           <div class="col-lg-9 col-md-8">x</div>
+                        </div>
+                        <h5 class="card-title">Application Status</h5>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <form method="post" id="housing">
+                                 {% csrf_token %}
+                                 <div class="row">
+                                    <div class="col-md-8 mb-2">
+                                       <select id="is_approved" name="is_approved" required class="form-select">
+                                          {% if post.is_approved == True %}
+                                          <option value="True" selected>Approved</option>
+                                          {% else %}
+                                          <option value="True">Approved</option>
+                                          {% endif %}
+                                          {% if post.is_approved == False %}
+                                          <option value="False" selected>Pending</option>
+                                          {% else %}
+                                          <option value="False">Pending</option>
+                                          {% endif %}
+                                       </select>
+                                    </div>
+                                    <div class="col-md-4 mb-1 text-end">
+                                       <button class="btn btn-primary rounded-pill" type="submit">Apply</button>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <!-- End data_minority_welfare -->
+
                      </div>
                   </div>
                   <!-- End Bordered Tabs -->

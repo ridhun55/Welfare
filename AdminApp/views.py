@@ -339,11 +339,29 @@ def PostVerifyAllView(request):
         postcategoryemployment__is_pending=True
     ).distinct()
     
+    data_housing = WelfarePost.objects.filter(
+        postcategoryhousing__is_applied=True,
+        postcategoryhousing__is_pending=True
+    ).distinct()
+    
+    data_rural_development = WelfarePost.objects.filter(
+        postcategoryruraldevelopment__is_applied=True,
+        postcategoryruraldevelopment__is_pending=True
+    ).distinct()
+    
+    data_minority_welfare = WelfarePost.objects.filter(
+        postcategoryminoritywelfare__is_applied=True,
+        postcategoryminoritywelfare__is_pending=True
+    ).distinct()
+
     
     context = {
         'data_education': data_education,
         'data_health': data_health,
         'data_employment': data_employment,
+        'data_housing': data_housing,
+        'data_rural_development': data_rural_development,
+        'data_minority_welfare': data_minority_welfare,
     }
     return render(request, 'AdminApp/PostVerify-All.html', context)
 
@@ -368,14 +386,33 @@ def PostVerifyPendingView(request):
         postcategoryemployment__is_approved=False
     ).distinct()
     
-    print(data_employment)
+    data_housing = WelfarePost.objects.filter(
+        postcategoryhousing__is_applied=True,
+        postcategoryhousing__is_pending=True,
+        postcategoryhousing__is_approved=False
+    ).distinct()
     
-    combined_posts = chain(data_education, data_health, data_employment)
+    data_rural_development = WelfarePost.objects.filter(
+        postcategoryruraldevelopment__is_applied=True,
+        postcategoryruraldevelopment__is_pending=True,
+        postcategoryruraldevelopment__is_approved=False
+    ).distinct()
+    
+    data_minority_welfare = WelfarePost.objects.filter(
+        postcategoryminoritywelfare__is_applied=True,
+        postcategoryminoritywelfare__is_pending=True,
+        postcategoryminoritywelfare__is_approved=False
+    ).distinct()
+       
+    combined_posts = chain(data_education, data_health, data_employment, data_housing, data_rural_development, data_minority_welfare)
 
     context = {
         'data_education': data_education,
         'data_health': data_health,
         'data_employment': data_employment,
+        'data_housing': data_housing,
+        'data_rural_development': data_rural_development,
+        'data_minority_welfare': data_minority_welfare,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-Pending.html', context)
@@ -401,13 +438,34 @@ def PostVerifyApprovedView(request):
         postcategoryemployment__is_approved=True
     ).distinct()
     
-    combined_posts = chain(data_education, data_health, data_employment)
+    data_housing = WelfarePost.objects.filter(
+        postcategoryhousing__is_applied=True,
+        postcategoryhousing__is_pending=True,
+        postcategoryhousing__is_approved=True
+    ).distinct()
+    
+    data_rural_development = WelfarePost.objects.filter(
+        postcategoryruraldevelopment__is_applied=True,
+        postcategoryruraldevelopment__is_pending=True,
+        postcategoryruraldevelopment__is_approved=True
+    ).distinct()
+    
+    data_minority_welfare = WelfarePost.objects.filter(
+        postcategoryminoritywelfare__is_applied=True,
+        postcategoryminoritywelfare__is_pending=True,
+        postcategoryminoritywelfare__is_approved=True
+    ).distinct()
+    
+    combined_posts = chain(data_education, data_health, data_employment, data_housing, data_rural_development, data_minority_welfare)
 
 
     context = {
         'data_education': data_education,
         'data_health': data_health,
         'data_employment': data_employment,
+        'data_housing': data_housing,
+        'data_rural_development': data_rural_development,
+        'data_minority_welfare': data_minority_welfare,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-Approved.html', context)
@@ -416,7 +474,7 @@ def PostVerifyApprovedView(request):
 from itertools import chain
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from . models import PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment
+from . models import PostCategoryEducation, PostCategoryHealth, PostCategoryHousing, PostCategoryEmployment, PostCategoryRuralDevelopment, PostCategoryMinorityWelfare
 
 @login_required(login_url='login')
 def PostVerifyViewView(request, item_id, user_id):
@@ -429,6 +487,18 @@ def PostVerifyViewView(request, item_id, user_id):
         post_id=item_id,
     )
     data_employment = PostCategoryEmployment.objects.filter(
+        user_id=user_id,
+        post_id=item_id,
+    )
+    data_housing = PostCategoryHousing.objects.filter(
+        user_id=user_id,
+        post_id=item_id,
+    )
+    data_rural_development = PostCategoryRuralDevelopment.objects.filter(
+        user_id=user_id,
+        post_id=item_id,
+    )
+    data_minority_welfare = PostCategoryMinorityWelfare.objects.filter(
         user_id=user_id,
         post_id=item_id,
     )
@@ -450,8 +520,26 @@ def PostVerifyViewView(request, item_id, user_id):
         if post_employment.new_flag:
             post_employment.new_flag = False
             post_employment.save()
+            
+    # Update new_flag for PostCategoryHousing objects
+    for post_housing in data_housing:
+        if post_housing.new_flag:
+            post_housing.new_flag = False
+            post_housing.save()
+            
+    # Update new_flag for PostCategoryRuralDevelopment objects
+    for post_rural_development in data_rural_development:
+        if post_rural_development.new_flag:
+            post_rural_development.new_flag = False
+            post_rural_development.save()
+            
+    # Update new_flag for PostCategoryMinorityWelfare objects
+    for post_minority_welfare in data_minority_welfare:
+        if post_minority_welfare.new_flag:
+            post_minority_welfare.new_flag = False
+            post_minority_welfare.save()
 
-    combined_posts = chain(data_education, data_health, data_employment)
+    combined_posts = chain(data_education, data_health, data_employment, data_housing, data_rural_development, data_minority_welfare )
 
     # Form submission for updating approval status
     if request.method == 'POST':
@@ -468,6 +556,18 @@ def PostVerifyViewView(request, item_id, user_id):
                 is_approved = request.POST.get('is_approved')
                 post.is_approved = is_approved == 'True'
                 post.save()
+            elif post.post.post_category == 'Housing':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
+            elif post.post.post_category == 'Rural_Development':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
+            elif post.post.post_category == 'Minority_Welfare':
+                is_approved = request.POST.get('is_approved')
+                post.is_approved = is_approved == 'True'
+                post.save()
 
         # Redirect to a different view or URL after processing the form data
         return redirect('post_verify_all')
@@ -476,6 +576,9 @@ def PostVerifyViewView(request, item_id, user_id):
         'data_education': data_education,
         'data_health': data_health,
         'data_employment': data_employment,
+        'data_housing': data_housing,
+        'data_rural_development': data_rural_development,
+        'data_minority_welfare': data_minority_welfare,
         'combined_data': combined_posts
     }
     return render(request, 'AdminApp/PostVerify-View.html', context)
@@ -484,7 +587,7 @@ def PostVerifyViewView(request, item_id, user_id):
 
 
 # IssueView
-from AdminApp.models import ReportAnIssue
+from AdminApp.models import ReportAnIssue, AskQuery
 
 @login_required(login_url='login')
 def IssueView(request):
@@ -510,3 +613,33 @@ def IssueDeleteView(request, pk):
     obj.delete()
     messages.success(request, f"Issue ID {pk} has been deleted.")
     return redirect('issue') 
+
+# QueryView
+
+@login_required(login_url='login')
+def QueryView(request):
+    data = AskQuery.objects.all()
+    context = {
+        'data':data
+    }
+    return render(request, 'AdminApp/Query.html', context)
+
+
+@login_required(login_url='login')
+def QueryReadView(request,id):
+    data = AskQuery.objects.get(id=id)
+    context = {
+        'data':data
+    }
+    return render(request, 'AdminApp/Query-Read.html', context)
+
+
+@login_required(login_url='login')
+def QueryDeleteView(request, pk):
+    obj = get_object_or_404(AskQuery, pk=pk)
+    obj.delete()
+    messages.success(request, f"Query ID {pk} has been deleted.")
+    return redirect('query') 
+
+
+

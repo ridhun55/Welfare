@@ -28,5 +28,9 @@ urlpatterns = [
    path('issue', views.IssueView, name='issue'),
    path('issue_read/<int:id>', views.IssueReadView, name='issue_read'),
    path('issue_delete/<int:pk>', views.IssueDeleteView, name='issue_delete'),
+   
+   path('query', views.QueryView, name='query'),
+   path('query_read/<int:id>', views.QueryReadView, name='query_read'),
+   path('query_delete/<int:pk>', views.QueryDeleteView, name='query_delete'),
 
 ]

@@ -18,12 +18,8 @@ class WelfarePost(models.Model):
       ('Education', 'Education'),
       ('Healthcare', 'Healthcare'),
       ('Employment', 'Employment'),
-      ('Social_Security', 'Social Security'),
       ('Housing', 'Housing'),
       ('Rural_Development', 'Rural Development'),
-      ('Women_and_Child_Welfare', 'Women and Child Welfare'),
-      ('Environment', 'Environment'),
-      ('Disaster_Management', 'Disaster Management'),
       ('Minority_Welfare', 'Minority Welfare'),
    ]
    post_category = models.CharField(max_length=60, choices = POST_CATEGORY_CHOICES, blank=True, null=True, default="")
@@ -235,6 +231,7 @@ class PostCategoryEmployment(models.Model):
        return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
     
     
+# Housing          
 class PostCategoryHousing(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
@@ -254,21 +251,14 @@ class PostCategoryHousing(models.Model):
 
     def __str__(self):
        return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
-    
-    
-
-class PostCategoryWomanAndChild(models.Model):
+   
+   
+# Rural_Development      
+class PostCategoryRuralDevelopment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
     
-    health_center_nearby = models.CharField(max_length=255, blank=True, null=True, default=None)   
-    school_nearby = models.CharField(max_length=255, blank=True, null=True, default=None)   
-    ration_card_no = models.CharField(max_length=255, blank=True, null=True, default=None)
-    # How would you rate your overall health? (Poor/Fair/Good/Excellent)
-    overall_health = models.CharField(max_length=255, blank=True, null=True, default=None) 
-    # How would you describe your current financial situation? (Poor/Fair/Good/Excellent)
-    financial_status = models.CharField(max_length=255, blank=True, null=True, default=None) 
-    
+        
     is_applied = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=False)
@@ -278,8 +268,24 @@ class PostCategoryWomanAndChild(models.Model):
 
     def __str__(self):
        return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
+    
+    
+# Minority_Welfare      
+class PostCategoryMinorityWelfare(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(WelfarePost, on_delete=models.CASCADE)
+    
+        
+    is_applied = models.BooleanField(default=False)
+    is_approved = models.BooleanField(default=False)
+    is_pending = models.BooleanField(default=False)
+    is_rejected = models.BooleanField(default=False)
+    new_flag = models.BooleanField(default=True)
+    submit_date = models.DateField(blank=True, null=True, default=None)
 
-
+    def __str__(self):
+       return f"{self.user.full_name} --- {self.post.post_title} --- {self.is_applied}"
+    
 
 
 # Report An Issue
@@ -290,6 +296,19 @@ class ReportAnIssue(models.Model):
     issue_message = models.TextField(blank=True, null=True,)
     submit_date = models.DateTimeField(auto_now_add=True)
     issue_flag = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+     
+     
+# Report An Issue
+
+class AskQuery(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True,)
+    email = models.EmailField(blank=True, null=True,)
+    query_message = models.TextField(blank=True, null=True,)
+    submit_date = models.DateTimeField(auto_now_add=True)
+    query_flag = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

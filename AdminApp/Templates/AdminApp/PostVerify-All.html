@@ -40,6 +40,7 @@
          background: #1f3c74;
          color: white;
       }
+      
 
       .table-user-btn {
          display: inline-flex;
@@ -85,7 +86,7 @@
                            }, 1500);
                         </script>
                         <!-- Bordered Table -->
-                        {% if data_education or data_health or data_employment %}
+                        {% if data_education or data_health or data_employment or data_housing or data_rural_development or data_minority_welfare %}
                         <table class="table table-bordered">
                            <thead>
                               <tr>
@@ -179,6 +180,87 @@
                               {% endfor %}
 
                               <!-- End Employment -->
+                              <!-- Housing -->
+                              {% for item in data_housing %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td>
+                                    <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
+                                    &nbsp;<span
+                                       class="badge bg-primary rounded-circle text-sm-center">{{item.postcategoryhousing_set.count}}</span>
+                                 </td>
+                                 <td>{{ item.post_category }}</td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryhousing_set.all %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
+                                             {{ application.user.full_name }}</a></span>
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %} 
+                              <!-- End Housing -->
+                              <!-- Rural Development -->
+                              {% for item in data_rural_development %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td>
+                                    <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
+                                    &nbsp;<span
+                                       class="badge bg-primary rounded-circle text-sm-center">{{item.postcategoryruraldevelopment_set.count}}</span>
+                                 </td>
+                                 <td>{{ item.post_category }}</td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryruraldevelopment_set.all %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
+                                             {{ application.user.full_name }}</a></span>
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %} 
+                              <!-- End Rural Development -->
+                              <!-- Minority Welfare -->
+                              {% for item in data_minority_welfare %}
+                              <tr>
+                                 <td>{{ item.id }}</td>
+                                 <td>{{ item.post_create_date | date:"d/m/Y" }}</td>
+                                 <td>
+                                    <a href="{% url 'post_read' item.id %}">{{ item.post_title }}</a>
+                                    &nbsp;<span
+                                       class="badge bg-primary rounded-circle text-sm-center">{{item.postcategoryminoritywelfare_set.count}}</span>
+                                 </td>
+                                 <td>{{ item.post_category }}</td>
+                                 <td>
+                                    <div class="table-user-btn">
+                                       {% for application in item.postcategoryminoritywelfare_set.all %}
+                                       <span>
+                                          {% if application.new_flag %}
+                                          <span class="badge bg-primary">New</span>
+                                          {% endif %}
+                                          <a href="{% url 'post_verify_view' item.id application.user.id %}"
+                                             class="{% if not application.is_approved %}text-danger{% endif %}">
+                                             {{ application.user.full_name }}</a></span>
+                                       {% endfor %}
+                                    </div>
+                                 </td>
+                              </tr>
+                              {% endfor %} 
+                              <!-- End Rural Development -->
                            </tbody>
                         </table>
                         {% endif %}

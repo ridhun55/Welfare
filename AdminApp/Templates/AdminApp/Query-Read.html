@@ -1,0 +1,76 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+
+
+{% block main-content %}
+{% if user.is_authenticated and user.is_superuser %}
+
+
+<main id="main" class="main">
+
+   <div class="pagetitle">
+      <h1>Query Details</h1>
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item active">Admin Dashboard</li>
+            <li class="breadcrumb-item active">Query Details</li>
+         </ol>
+      </nav>
+   </div><!-- End Page Title -->
+
+   <section class="section dashboard">
+      <div class="row">
+
+         <!-- Left side columns -->
+         <div class="col-lg-12">
+            <div class="row">
+
+               <!-- Table 1 -->
+               <div class="col-md-12 col-lg-10">
+                  <div class="card">
+                     <div class="card-body">
+                        {% if data %}
+
+                        <div class="px-4 py-5">
+
+                           <h3>{{ data.name }} - {{data.email}}</h3>
+
+                           <small>{{ data.submit_date }}</small>
+
+                           <br>
+                           <br>
+
+                           <small>Query Details</small>
+                           <p class="mt-2">{{ data.query_message }}</p>
+
+
+                        </div>
+
+                        {% endif %}
+
+
+
+                     </div>
+                  </div>
+               </div>
+               <!-- End Table 1 -->
+
+            </div>
+         </div><!-- End Left side columns -->
+
+      </div>
+   </section>
+
+
+
+
+
+
+
+
+</main><!-- End #main -->
+
+
+{% endif %}
+{% endblock main-content %}

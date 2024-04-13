@@ -120,6 +120,12 @@
             <span>Issues</span>
          </a>
       </li><!-- End F.A.Q Page Nav -->
+      <li class="nav-item">
+         <a class="nav-link collapsed" href="{% url 'query' %}">
+            <i class="bi bi-question-circle"></i>
+            <span>Queries</span>
+         </a>
+      </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
          <a class="nav-link collapsed" href="pages-contact.html">
@@ -235,13 +241,13 @@
       <li class="nav-heading mt-4">Others</li>
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="pages-faq.html">
+         <a class="nav-link collapsed" href="{% url 'report_issue' %}">
             <i class="bi bi-question-circle"></i>
             <span>Report an Issue</span>
          </a>
       </li><!-- End F.A.Q Page Nav -->
       <li class="nav-item">
-         <a class="nav-link collapsed" href="pages-faq.html">
+         <a class="nav-link collapsed" href="{% url 'ask_query' %}">
             <i class="bi bi-question-circle"></i>
             <span>Ask a Query</span>
          </a>

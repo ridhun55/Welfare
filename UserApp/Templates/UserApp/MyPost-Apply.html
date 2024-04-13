@@ -697,18 +697,10 @@
                         <input type="text" required name="salary_per_month"
                            value="{% if data.salary_per_month %}{{data.salary_per_month}}{% endif %}" class="form-control">
                      </div>
-                     {% elif data.post_category == 'Social_Security' %}
-                     Social_Security
                      {% elif data.post_category == 'Housing' %}
                      Housing
                      {% elif data.post_category == 'Rural_Development' %}
                      Rural_Development
-                     {% elif data.post_category == 'Women_and_Child_Welfare' %}
-                     Women_and_Child_Welfare
-                     {% elif data.post_category == 'Environment' %}
-                     Environment
-                     {% elif data.post_category == 'Disaster_Management' %}
-                     Disaster_Management
                      {% elif data.post_category == 'Minority_Welfare' %}
                      Minority_Welfare
                      {% endif %}

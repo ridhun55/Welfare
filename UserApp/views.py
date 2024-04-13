@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, time
 from UserApp .models import CustomUser
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
-from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryHousing, PostCategoryWomanAndChild
+from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryMinorityWelfare, PostCategoryRuralDevelopment, PostCategoryHousing
 
 
 
@@ -466,6 +466,78 @@ def MyPostApplyView(request, post_id):
         obj.save()
         return redirect('mypost_all')
     
+    elif request.method == 'POST' and post_category == 'Housing':
+        # company_name = request.POST.get('company_name')
+        
+        existing_application = PostCategoryHousing.objects.filter(user=request.user, post=obj1).exists()
+        if existing_application:
+            messages.error(request, 'You have already applied for this post.')
+            return redirect('mypost_apply', post_id=post_id)
+
+        obj = PostCategoryHousing(
+            user=request.user,
+            post=obj1,
+            
+            # company_name=company_name,
+            
+            is_applied=True,
+            is_approved=False,
+            is_pending=True,
+            is_rejected=False,
+            new_flag=True,
+            submit_date=datetime.today().date()
+        )
+        obj.save()
+        return redirect('mypost_all')
+    
+    elif request.method == 'POST' and post_category == 'Rural_Development':
+        # company_name = request.POST.get('company_name')
+        
+        existing_application = PostCategoryRuralDevelopment.objects.filter(user=request.user, post=obj1).exists()
+        if existing_application:
+            messages.error(request, 'You have already applied for this post.')
+            return redirect('mypost_apply', post_id=post_id)
+
+        obj = PostCategoryRuralDevelopment(
+            user=request.user,
+            post=obj1,
+            
+            # company_name=company_name,
+            
+            is_applied=True,
+            is_approved=False,
+            is_pending=True,
+            is_rejected=False,
+            new_flag=True,
+            submit_date=datetime.today().date()
+        )
+        obj.save()
+        return redirect('mypost_all')
+    
+    elif request.method == 'POST' and post_category == 'Minority_Welfare':
+        # company_name = request.POST.get('company_name')
+        
+        existing_application = PostCategoryMinorityWelfare.objects.filter(user=request.user, post=obj1).exists()
+        if existing_application:
+            messages.error(request, 'You have already applied for this post.')
+            return redirect('mypost_apply', post_id=post_id)
+
+        obj = PostCategoryMinorityWelfare(
+            user=request.user,
+            post=obj1,
+            
+            # company_name=company_name,
+            
+            is_applied=True,
+            is_approved=False,
+            is_pending=True,
+            is_rejected=False,
+            new_flag=True,
+            submit_date=datetime.today().date()
+        )
+        obj.save()
+        return redirect('mypost_all')
+    
     context = {
         'data': obj1
     }
@@ -477,7 +549,7 @@ def MyPostApplyView(request, post_id):
 
 # Report An Issue
 
-from AdminApp.models import ReportAnIssue
+from AdminApp.models import ReportAnIssue, AskQuery
 
 def ReportIssueView(request):
     if request.method == 'POST':
@@ -491,7 +563,31 @@ def ReportIssueView(request):
            issue_message=issue_message, 
            issue_flag=True
            )
-
-        return redirect('login')
-
+        if request.user.is_authenticated:
+            return redirect('user_dash')
+        else:
+            return redirect('login')
+   
     return render(request, 'UserApp/Report-Issue.html')
+
+
+# Ask Query
+
+def AskQueryView(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        query_message = request.POST.get('query_message')
+
+        AskQuery.objects.create(
+           name=name, 
+           email=email, 
+           query_message=query_message, 
+           query_flag=True
+           )
+        if request.user.is_authenticated:
+            return redirect('user_dash')
+        else:
+            return redirect('login')
+   
+    return render(request, 'UserApp/Ask-Query.html')

@@ -19,6 +19,31 @@
       </nav>
    </div><!-- End Page Title -->
 
+   <style>
+      .btn-create-post {
+         position: relative;
+      }
+
+      .btn-create-post {
+         background: #00b60f;
+         padding: 7px 12px;
+         cursor: pointer;
+         text-decoration: none;
+         color: white;
+         border-radius: 50px;
+         font-size: 13px;
+         position: absolute;
+         top: 25px;
+         right: 28px;
+      }
+
+      .btn-create-post:hover {
+         text-decoration: none;
+         background: #ff7d03;
+         color: white;
+      }
+   </style>
+
    <section class="section dashboard">
       <div class="row">
 
@@ -30,15 +55,16 @@
                <div class="col-12">
                   <div class="card">
                      <div class="card-body">
+                        <a class="btn-create-post" href="{% url 'post_create' %}">Create New</a>
                         {% if data %}
-                           <h5 class="card-title">All Post</h5>
-                           <p>All Outdated Posts shown  below</p>
+                        <h5 class="card-title">All Post</h5>
+                        <p>All Outdated Posts shown below</p>
                         {% else %}
-                           <p class="text-center mt-5 mb-4">
-                              <small>--- No Posts ---</small>
-                           </p>
+                        <p class="text-center mt-5 mb-4">
+                           <small>--- No Posts ---</small>
+                        </p>
                         {% endif %}
-                        
+
 
                         <!-- Alert Message -->
 
@@ -92,17 +118,21 @@
                                     {% else %}
                                     <span class="badge bg-danger">Inactive</span>
                                     {% endif %}
-                                    {% if item.post_end_date < today_date %} 
-                                    <span class="badge bg-white text-danger">Expired</span>
-                                    {% endif %}
+                                    {% if item.post_end_date < today_date %} <span class="badge bg-white text-danger">
+                                       Expired</span>
+                                       {% endif %}
                                  </td>
                                  <td>
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                          class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-arrow">
-                                       <li><a class="dropdown-item" href="{% url 'post_read' item.id %}">Read Post</a></li>
-                                       <li><a class="dropdown-item" href="{% url 'post_update' item.id %}">Update</a></li>
-                                 
-                                       <li><a class="dropdown-item" href="{% url 'post_delete' item.id %}">Delete</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'post_read' item.id %}">Read Post</a>
+                                       </li>
+                                       <li><a class="dropdown-item" href="{% url 'post_update' item.id %}">Update</a>
+                                       </li>
+
+                                       <li><a class="dropdown-item" href="{% url 'post_delete' item.id %}">Delete</a>
+                                       </li>
                                     </ul>
                                  </td>
                               </tr>

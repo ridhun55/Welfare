@@ -1,3 +1,4 @@
+
 {% extends 'Base.html' %}
 {% load static %}
 
@@ -18,8 +19,8 @@
                      <div class="card-body">
 
                         <div class="pt-4 pb-2">
-                           <h5 class="card-title text-center pb-0 fs-4">Ask A Query</h5>
-                           <p class="text-center small">Get Answers to Your Questions with 'Ask A Query'</p>
+                           <h5 class="card-title text-center pb-0 fs-4">Ask Your Queries</h5>
+                           <p class="text-center small">Ask your queries and doubts below.</p>
                         </div>
 
                         {% if error_message %}
@@ -35,28 +36,22 @@
                            {% csrf_token %}
 
                            <div class="col-12">
-                              <label for="yourEmail" class="form-label">Your Email</label>
-                              <input type="email" name="email" class="form-control" id="yourEmail" required>
-                           </div>
-                           <div class="col-12">
                               <label for="yourUsername" class="form-label">Name</label>
                               <input type="text" name="name" class="form-control" id="yourUsername" required>
                            </div>
-
                            <div class="col-12">
-                              <label for="mob" class="form-label">Mobile number</label>
-                              <input type="number" name="mobile" class="form-control" id="mob" required >
+                              <label for="yourEmail" class="form-label">Email</label>
+                              <input type="email" name="email" class="form-control" id="yourEmail" required>
                            </div>
                            <div class="col-12">
-                              <label for="askquery" class="form-label">Your Query</label>
-                              <textarea type="text" name="query" class="form-control" id="askquery" required
-                                 style="width: 100%; height: 150px;">Enter your message here...</textarea>
+                              <label for="query_message" class="form-label">Ask Your Query</label>
+                              <textarea type="text" name="query_message" class="form-control" id="query_message" required style="width: 100%; height: 150px;" placeholder="Enter your message here..."></textarea>
                            </div>
 
 
 
                            <div class="col-12 mx-auto">
-                              <button class="btn btn-primary w-100 rounded-pill mt-3" type="submit">Submit Query</button>
+                              <button class="btn btn-primary w-100 rounded-pill mt-3" type="submit">SUBMIT</button>
                            </div>
 
                         </form>
