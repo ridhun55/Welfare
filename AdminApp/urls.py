@@ -5,7 +5,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-   path('admin_dash/', views.AdminDashboardView, name='admin_dash'),
+   path('', views.AdminDashboardView, name='admin_dash'),
    path('user_profile_All/', views.UserProfileAllView, name='user_profile_All'),
    path('user_profile_verified/', views.UserProfileVerifiedView, name='user_profile_verified'),
    path('user_profile_verify_pending/', views.UserProfileVerifyPendingView, name='user_profile_verify_pending'),

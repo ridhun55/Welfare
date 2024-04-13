@@ -52,9 +52,9 @@
                                  <td>
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                     <ul class="dropdown-menu dropdown-menu-arrow">                                 
-                                       <li><a class="dropdown-item" href="#">View Details</a></li>
-                                       <li><a class="dropdown-item" href="#">Update</a></li>
-                                       <li><a class="dropdown-item" href="#">Delete</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'post_read' item_5.id %}">View Details</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'post_update' item_5.id %}">Update</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'post_delete' item_5.id %}">Delete</a></li>
                                     </ul>
                                  </td>
                               </tr>
