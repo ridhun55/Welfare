@@ -591,7 +591,7 @@ from AdminApp.models import ReportAnIssue, AskQuery
 
 @login_required(login_url='login')
 def IssueView(request):
-    data = ReportAnIssue.objects.all()
+    data = ReportAnIssue.objects.all().order_by('-id')
     context = {
         'data':data
     }
