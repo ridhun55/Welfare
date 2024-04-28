@@ -18,6 +18,9 @@ urlpatterns = [
    path('mypost_all/', views.MyPostAllView, name='mypost_all'),
    path('mypost_apply/<int:post_id>', views.MyPostApplyView, name='mypost_apply'),
    path('mypost_this_month/', views.MyPostThisMonthView, name='mypost_this_month'),
+   path('mypost_applied/', views.MyPostAppliedView, name='mypost_applied'),
+   path('mypost_approved/', views.MyPostApprovedView, name='mypost_approved'),
+   path('mypost_rejected/', views.MyPostRejectedView, name='mypost_rejected'),
    
    path('error/', views.error_page, name='error_page'),
    

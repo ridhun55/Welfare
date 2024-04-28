@@ -618,7 +618,7 @@ def IssueDeleteView(request, pk):
 
 @login_required(login_url='login')
 def QueryView(request):
-    data = AskQuery.objects.all()
+    data = AskQuery.objects.all().order_by('-id')
     context = {
         'data':data
     }

@@ -545,6 +545,71 @@ def MyPostApplyView(request, post_id):
 
 
 
+@login_required(login_url='login') 
+def MyPostAppliedView(request):
+    user = request.user
+    post_ids_education = PostCategoryEducation.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    post_ids_health = PostCategoryHealth.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    post_ids_employment = PostCategoryEmployment.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    post_ids_housing = PostCategoryHousing.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    post_ids_rural_dev = PostCategoryRuralDevelopment.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    post_ids_minority_welfare = PostCategoryMinorityWelfare.objects.filter(user=user, is_applied=True).values_list('post_id', flat=True)
+    
+    all_post_ids = set(post_ids_education) | set(post_ids_health) | set(post_ids_employment) | set(post_ids_housing) | set(post_ids_rural_dev) | set(post_ids_minority_welfare)
+    
+    posts = WelfarePost.objects.filter(id__in=all_post_ids)
+    
+    context = {
+        'posts': posts,
+    }
+    html = 'UserApp/MyPost-Applied.html'
+    return render(request, html, context)
+
+
+
+@login_required(login_url='login') 
+def MyPostApprovedView(request):
+    user = request.user
+    post_ids_education = PostCategoryEducation.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    post_ids_health = PostCategoryHealth.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    post_ids_employment = PostCategoryEmployment.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    post_ids_housing = PostCategoryHousing.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    post_ids_rural_dev = PostCategoryRuralDevelopment.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    post_ids_minority_welfare = PostCategoryMinorityWelfare.objects.filter(user=user, is_approved=True, is_rejected=False).values_list('post_id', flat=True)
+    
+    all_post_ids = set(post_ids_education) | set(post_ids_health) | set(post_ids_employment) | set(post_ids_housing) | set(post_ids_rural_dev) | set(post_ids_minority_welfare)
+    
+    posts = WelfarePost.objects.filter(id__in=all_post_ids)
+    
+    context = {
+        'posts': posts,
+    }
+    html = 'UserApp/MyPost-Approved.html'
+    return render(request, html, context)
+
+
+@login_required(login_url='login') 
+def MyPostRejectedView(request):
+    user = request.user
+    post_ids_education = PostCategoryEducation.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    post_ids_health = PostCategoryHealth.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    post_ids_employment = PostCategoryEmployment.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    post_ids_housing = PostCategoryHousing.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    post_ids_rural_dev = PostCategoryRuralDevelopment.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    post_ids_minority_welfare = PostCategoryMinorityWelfare.objects.filter(user=user, is_rejected=True).values_list('post_id', flat=True)
+    
+    all_post_ids = set(post_ids_education) | set(post_ids_health) | set(post_ids_employment) | set(post_ids_housing) | set(post_ids_rural_dev) | set(post_ids_minority_welfare)
+    
+    posts = WelfarePost.objects.filter(id__in=all_post_ids)
+    
+    context = {
+        'posts': posts,
+    }
+    html = 'UserApp/MyPost-Rejected.html'
+    return render(request, html, context)
+
+
+
 
 
 # Report An Issue

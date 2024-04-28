@@ -127,13 +127,6 @@
          </a>
       </li><!-- End F.A.Q Page Nav -->
 
-      <li class="nav-item">
-         <a class="nav-link collapsed" href="pages-contact.html">
-            <i class="bi bi-envelope"></i>
-            <span>Notifications</span>
-         </a>
-      </li><!-- End Contact Page Nav -->
-
    </ul>
 
 </aside>
@@ -167,7 +160,13 @@
             <span>My Welfares</span>
             <i class="bi bi-chevron-down ms-auto"></i>
          </a>
-         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+         <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li>
+               <a href="{% url 'mypost_all'%}">
+                  <i class="bi bi-circle"></i>
+                  <span>View All</span>
+               </a>
+            </li>
             <li>
                <a href="{% url 'mypost_this_month' %}">
                   <i class="bi bi-circle"></i>
@@ -175,35 +174,24 @@
                </a>
             </li>
             <li>
-               <a href="#">
-                  <i class="bi bi-circle"></i>
-                  <span>New Arrival</span>
-               </a>
-            </li>
-            <li>
-               <a href="#">
+               <a href="{% url 'mypost_applied' %}">
                   <i class="bi bi-circle"></i>
                   <span>Applied</span>
                </a>
             </li>
             <li>
-               <a href="#">
+               <a href="{% url 'mypost_approved' %}">
                   <i class="bi bi-circle"></i>
                   <span>Approved</span>
                </a>
             </li>
             <li>
-               <a href="#">
+               <a href="{% url 'mypost_rejected' %}">
                   <i class="bi bi-circle"></i>
                   <span>Rejected</span>
                </a>
             </li>
-            <li>
-               <a href="{% url 'mypost_all'%}">
-                  <i class="bi bi-circle"></i>
-                  <span>View All</span>
-               </a>
-            </li>
+            
 
          </ul>
       </li><!-- End Components Nav -->

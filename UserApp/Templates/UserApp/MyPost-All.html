@@ -16,12 +16,12 @@
 <main id="main" class="main">
 
    <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>All Welfares</h1>
       <nav>
          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item">Users</li>
-            <li class="breadcrumb-item active">Profile</li>
+            <li class="breadcrumb-item active">All Welfares</li>
          </ol>
       </nav>
    </div><!-- End Page Title -->
@@ -49,12 +49,16 @@
                                  {% endif %}
                               </div>
                               <div class="">
-                                 <small class="px-3">Last Date</small> <br>
-                                 <small class="text-danger px-3">{{ item.post_end_date | date:"d/ m/ Y" }}</small>
+                                 <small class="px-2">Start Date</small> <br>
+                                 <small class="px-2">{{ item.post_start_date | date:"d/m/Y" }}</small>
                               </div>
                               <div class="">
-                                 <small class="px-3">Category</small> <br>
-                                 <small class="px-3">
+                                 <small class="px-3">Last Date</small> <br>
+                                 <small class="text-danger px-3">{{ item.post_end_date | date:"d/m/Y" }}</small>
+                              </div>
+                              <div class="">
+                                 <small class="px-2">Category</small> <br>
+                                 <small class="px-2">
                                     {% if item.post_category == 'Education' %}Education{% endif %}
                                     {% if item.post_category == 'Healthcare' %}Healthcare{% endif %}
                                     {% if item.post_category == 'Employment' %}Employment{% endif %}
