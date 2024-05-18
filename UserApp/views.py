@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, time
 from UserApp .models import CustomUser
 from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
-from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryMinorityWelfare, PostCategoryRuralDevelopment, PostCategoryHousing
+from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryMinorityWelfare, PostCategoryRuralDevelopment, PostCategoryHousing, Feedback
 
 
 
@@ -656,3 +656,25 @@ def AskQueryView(request):
             return redirect('login')
    
     return render(request, 'UserApp/Ask-Query.html')
+
+
+# add Feedback
+@login_required(login_url='login') 
+def AddFeedbackView(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        feedback_message = request.POST.get('feedback_message')
+
+        Feedback.objects.create(
+           name=name, 
+           email=email, 
+           feedback_message=feedback_message, 
+           feedback_flag=True
+           )
+        if request.user.is_authenticated:
+            return redirect('user_dash')
+        else:
+            return redirect('login')
+   
+    return render(request, 'UserApp/Add-Feedback.html')

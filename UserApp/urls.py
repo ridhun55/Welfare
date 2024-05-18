@@ -26,4 +26,5 @@ urlpatterns = [
    
    path('report_issue/', views.ReportIssueView, name='report_issue'),
    path('ask_query/', views.AskQueryView, name='ask_query'),
+   path('add_feedback/', views.AddFeedbackView, name='add_feedback'),
 ]

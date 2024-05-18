@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from UserApp .models import CustomUser
-from AdminApp .models import WelfarePost, PostCategoryEducation
+from AdminApp .models import WelfarePost, PostCategoryEducation, Feedback
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from datetime import datetime, date
@@ -13,8 +13,10 @@ from django.http import HttpResponseBadRequest
 @login_required(login_url='login')
 def AdminDashboardView(request):
     latest_5_post = WelfarePost.objects.order_by('-post_create_date')[:10]
+    latest_5_user = CustomUser.objects.filter(is_superuser=False, verified_flag=False).order_by('-reg_date')[:5]
     context = {
         'latest_5_post' : latest_5_post,
+        'latest_5_user' : latest_5_user,
     }
     html = 'AdminApp/Admin-Dashboard.html'
     return render(request, html, context)
@@ -643,3 +645,27 @@ def QueryDeleteView(request, pk):
 
 
 
+@login_required(login_url='login')
+def FeedbackView(request):
+    data = Feedback.objects.all().order_by('-id')
+    context = {
+        'data':data
+    }
+    return render(request, 'AdminApp/Feedback.html', context)
+
+
+@login_required(login_url='login')
+def FeedbackReadView(request,id):
+    data = Feedback.objects.get(id=id)
+    context = {
+        'data':data,
+    }
+    return render(request, 'AdminApp/Feedback-Read.html', context)
+
+
+@login_required(login_url='login')
+def FeedbackDeleteView(request, id):
+    obj = get_object_or_404(Feedback, id=id)
+    obj.delete()
+    messages.success(request, f"Feedback ID {id} has been deleted.")
+    return redirect('feedback') 

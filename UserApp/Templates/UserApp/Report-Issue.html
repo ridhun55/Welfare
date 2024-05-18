@@ -20,7 +20,7 @@
 
                         <div class="pt-4 pb-2">
                            <h5 class="card-title text-center pb-0 fs-4">Report An Issue</h5>
-                           <p class="text-center small">Share your feedback or report any issues here.</p>
+                           <p class="text-center small">Report your issues below.</p>
                         </div>
 
                         {% if error_message %}
@@ -44,7 +44,7 @@
                               <input type="email" name="email" class="form-control" id="yourEmail" required>
                            </div>
                            <div class="col-12">
-                              <label for="issue_message" class="form-label">Feedback / Issue message</label>
+                              <label for="issue_message" class="form-label">Issue message</label>
                               <textarea type="text" name="issue_message" class="form-control" id="issue_message" required style="width: 100%; height: 150px;" placeholder="Enter your message here..."></textarea>
                            </div>
 
@@ -53,10 +53,13 @@
                            <div class="col-12 mx-auto">
                               <button class="btn btn-primary w-100 rounded-pill mt-3" type="submit">SUBMIT</button>
                            </div>
-
+                           
                         </form>
-
+                        
                      </div>
+                  </div>
+                  <div class="col-12 text-center">
+                     <p class="small mb-0"><a href="{% url 'login' %}">Goto Back</a></p>
                   </div>
 
 

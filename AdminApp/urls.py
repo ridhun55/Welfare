@@ -33,4 +33,7 @@ urlpatterns = [
    path('query_read/<int:id>', views.QueryReadView, name='query_read'),
    path('query_delete/<int:pk>', views.QueryDeleteView, name='query_delete'),
 
+   path('feedback', views.FeedbackView, name='feedback'),
+   path('feedback_read/<int:id>', views.FeedbackReadView, name='feedback_read'),
+   path('feedback_delete/<int:id>', views.FeedbackDeleteView, name='feedback_delete'),
 ]

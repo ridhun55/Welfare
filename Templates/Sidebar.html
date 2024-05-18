@@ -126,6 +126,12 @@
             <span>Queries</span>
          </a>
       </li><!-- End F.A.Q Page Nav -->
+      <li class="nav-item">
+         <a class="nav-link collapsed" href="{% url 'feedback' %}">
+            <i class="bi bi-question-circle"></i>
+            <span>Feedbacks</span>
+         </a>
+      </li><!-- End F.A.Q Page Nav -->
 
    </ul>
 
@@ -242,9 +248,9 @@
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-         <a class="nav-link collapsed" href="pages-contact.html">
+         <a class="nav-link collapsed" href="{% url 'add_feedback' %}">
             <i class="bi bi-envelope"></i>
-            <span>All Notifications</span>
+            <span>Feedbacks</span>
          </a>
       </li><!-- End Contact Page Nav -->
 

@@ -312,3 +312,14 @@ class AskQuery(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=255, blank=True, null=True,)
+    email = models.EmailField(blank=True, null=True,)
+    feedback_message = models.TextField(blank=True, null=True,)
+    submit_date = models.DateTimeField(auto_now_add=True)
+    feedback_flag = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
