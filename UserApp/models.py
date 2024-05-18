@@ -152,18 +152,3 @@ class CustomUser(AbstractUser):
         return self.username
    
    
-
-# ==========================================  
-#              Ask Quary
-# ==========================================   
-
-# class AskQuery(models.Model):    
-#     q_email = models.EmailField(blank=True, null=True, default=None)
-#     q_name = models.CharField(max_length=255, blank=True, null=True, default=None)
-#     q_mobile = models.CharField(max_length=255, blank=True, null=True, default=None)
-#     q_query = models.TextField(max_length=255, blank=True, null=True, default=None)
-#     q_submit_date = models.DateField(blank=True, null=True, default=None)
-#     q_flag = models.BooleanField(default=False)
-    
-#     def __str__(self):
-#         return self.name

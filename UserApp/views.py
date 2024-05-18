@@ -12,6 +12,33 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from AdminApp.models import WelfarePost, PostCategoryEducation, PostCategoryHealth, PostCategoryEmployment, PostCategoryMinorityWelfare, PostCategoryRuralDevelopment, PostCategoryHousing, Feedback
 
+from AdminApp.models import Activity
+
+
+
+# # USER DASHBOARD
+ 
+# @login_required(login_url='login')
+# def UserDashboardView(request):
+#    context = {}
+#    return render(request, 'UserApp/User-Dashboard.html', context)
+ 
+ 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from AdminApp.models import Activity
+
+@login_required(login_url='login')
+def UserDashboardView(request):
+    recent_activities = Activity.objects.filter(user=request.user).order_by('-timestamp')[:10]  # Get the 10 most recent activities
+    profile_update_count = Activity.objects.filter(user=request.user, description='Updated profile').count()  # Count profile updates
+    
+    context = {
+        'recent_activities': recent_activities,
+        'profile_update_count': profile_update_count,
+    }
+    return render(request, 'UserApp/User-Dashboard.html', context)
+ 
 
 
 # LOGIN & REGISTER
@@ -161,6 +188,10 @@ def MyProfileUpdateView(request):
             user.identity_img = identity_img
             
       user.save()
+      
+      # Log the activity
+      Activity.objects.create(user=user, description='Updated profile')
+      
       return redirect('user_dash')
       
 
@@ -181,71 +212,6 @@ def MyDocumentsView(request):
    return render(request, html, context)
 
 
-# ==================================
- 
-# ==================================
-
-
-
-
-
- 
-
-# USER DASHBOARD
- 
-@login_required(login_url='login')
-def UserDashboardView(request):
-    if request.method == 'POST':
-        user = request.user
-        user.username = request.POST.get('username')
-        user.full_name = request.POST.get('full_name')
-        user.profile_img = request.FILES.get('profile_img')
-        user.gender = request.POST.get('gender')
-        user.age = request.POST.get('age')
-        user.dob = request.POST.get('dob')
-        user.email = request.POST.get('email')
-        user.mobile_no = request.POST.get('mobile_no')        
-        user.father = request.POST.get('father')        
-        user.mother = request.POST.get('mother')        
-        user.marital_status = request.POST.get('marital_status')        
-        user.children_no = request.POST.get('children_no')        
-        user.employment_status = request.POST.get('employment_status')        
-        user.occupation = request.POST.get('occupation')        
-        user.monthly_income = request.POST.get('monthly_income')        
-        user.highest_education = request.POST.get('highest_education')        
-        user.highest_education_mark = request.POST.get('highest_education_mark')        
-        user.caste = request.POST.get('caste')        
-        user.religion = request.POST.get('religion')        
-        user.has_disabilities = request.POST.get('has_disabilities')        
-        user.disabilities_specify = request.POST.get('disabilities_specify')        
-        user.account_number = request.POST.get('account_number')        
-        user.bank_name = request.POST.get('bank_name')        
-        user.ifsc_code = request.POST.get('ifsc_code')                
-        user.aadhar_img = request.FILES.get('aadhar_img') 
-        user.identity_img = request.FILES.get('identity_img') 
-        user.profile_updated_flag = "True" 
-        
-        user.save()
-        return redirect('user_dash')
-    context = {}
-    html = 'UserApp/User-Dashboard.html'
-    return render(request, html, context)
- 
- 
- 
-# def HomeView(request):
-#     notifications = [
-#         {'id': 1, 'title': 'Lorem Ipsum', 'message': 'Quae dolorem earum veritatis odit seno', 'time': '30 min. ago'},
-#         {'id': 2, 'title': 'Atque rerum nesciunt', 'message': 'Quae dolorem earum veritatis odit seno', 'time': '1 hr. ago'},
-#         {'id': 3, 'title': 'Sit rerum fuga', 'message': 'Quae dolorem earum veritatis odit seno', 'time': '2 hrs. ago'},
-#         {'id': 4, 'title': 'Dicta reprehenderit', 'message': 'Quae dolorem earum veritatis odit seno', 'time': '4 hrs. ago'},
-#     ]
-#     context = {
-#         'notifications': notifications,
-#     }
-#     html = 'Home.html'
-#     return render(request, html, context)
- 
 
 @login_required(login_url='login') 
 def MyPostAllView(request):
@@ -390,6 +356,10 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Education Welfare')
+        
         return redirect('mypost_all')
 
     elif request.method == 'POST' and post_category == 'Healthcare':
@@ -434,6 +404,9 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Healthcare Welfare')
         return redirect('mypost_all')
      
     elif request.method == 'POST' and post_category == 'Employment':
@@ -464,6 +437,9 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Employment Welfare')
         return redirect('mypost_all')
     
     elif request.method == 'POST' and post_category == 'Housing':
@@ -488,6 +464,9 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Housing Welfare')
         return redirect('mypost_all')
     
     elif request.method == 'POST' and post_category == 'Rural_Development':
@@ -512,6 +491,9 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Rural Development Welfare')
         return redirect('mypost_all')
     
     elif request.method == 'POST' and post_category == 'Minority_Welfare':
@@ -536,6 +518,9 @@ def MyPostApplyView(request, post_id):
             submit_date=datetime.today().date()
         )
         obj.save()
+        # Log the activity
+        user = request.user
+        Activity.objects.create(user=user, description='Applied Minority Welfare Welfare')
         return redirect('mypost_all')
     
     context = {
@@ -629,6 +614,8 @@ def ReportIssueView(request):
            issue_flag=True
            )
         if request.user.is_authenticated:
+            user = request.user
+            Activity.objects.create(user=user, description='Report An Issue')
             return redirect('user_dash')
         else:
             return redirect('login')
@@ -651,6 +638,8 @@ def AskQueryView(request):
            query_flag=True
            )
         if request.user.is_authenticated:
+            user = request.user
+            Activity.objects.create(user=user, description='Submit A Query')
             return redirect('user_dash')
         else:
             return redirect('login')
@@ -673,6 +662,8 @@ def AddFeedbackView(request):
            feedback_flag=True
            )
         if request.user.is_authenticated:
+            user = request.user
+            Activity.objects.create(user=user, description='Submit A Feedback')
             return redirect('user_dash')
         else:
             return redirect('login')
